@@ -101,4 +101,41 @@ public class SpotifyService {
         return searchResponseDtoList;
     }
 
+    public List<SpotifySearchResponseDto> searchByGenre(String genre) {
+        SpotifyApi spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(SpotifyConfig.getAccessToken())
+                .build();
+
+        List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
+
+        try {
+            SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks("genre:" + genre)
+                    .limit(50)
+                    .build();
+
+            Paging<Track> searchResult = searchTracksRequest.execute();
+            Track[] tracks = searchResult.getItems();
+
+            for (Track track : tracks) {
+                String title = track.getName();
+                String previewUrl = track.getPreviewUrl();
+
+                AlbumSimplified album = track.getAlbum();
+                ArtistSimplified[] artists = album.getArtists();
+                String artistName = artists[0].getName();
+
+                Image[] images = album.getImages();
+                String imageUrl = (images.length > 0) ? images[0].getUrl() : "NO_IMAGE";
+
+                String albumName = album.getName();
+
+                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(artistName, title, albumName, imageUrl, previewUrl));
+            }
+
+        } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return searchResponseDtoList;
+    }
+
 }

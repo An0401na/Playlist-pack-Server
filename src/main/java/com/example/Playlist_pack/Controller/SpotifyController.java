@@ -32,4 +32,10 @@ public class SpotifyController {
         return spotifyService.SearchByTracknameAndArtist(trackname,artist);
     }
 
+
+    @GetMapping("/search/genre/{genre}")
+    public List<SpotifySearchResponseDto> searchTracksByGenre(@PathVariable String genre)
+            throws IOException, SpotifyWebApiException {
+        return spotifyService.searchByGenre(genre);
+    }
 }
