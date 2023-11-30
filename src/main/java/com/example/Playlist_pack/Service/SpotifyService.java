@@ -146,7 +146,44 @@ public class SpotifyService {
         List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
         try {
-            GetPlaylistRequest getHot100PlaylistRequest = spotifyApi.getPlaylist("37i9dQZEVXbMDoHDwVN2tF") // HOT 100 playlist ID
+            GetPlaylistRequest getHot100PlaylistRequest = spotifyApi.getPlaylist("37i9dQZF1DXcBWIGoYBM5M") // HOT 100 playlist ID
+                    .build();
+
+            Playlist hot100Playlist = getHot100PlaylistRequest.execute();
+            List<PlaylistTrack> tracks = Arrays.asList(hot100Playlist.getTracks().getItems());
+
+            for (PlaylistTrack playlistTrack : tracks) {
+                Track track = (Track) playlistTrack.getTrack();
+                String title = track.getName();
+                String previewUrl = track.getPreviewUrl();
+
+                AlbumSimplified album = track.getAlbum();
+                ArtistSimplified[] artists = album.getArtists();
+                String artistName = artists[0].getName();
+
+                Image[] images = album.getImages();
+                String imageUrl = (images.length > 0) ? images[0].getUrl() : "NO_IMAGE";
+
+                String albumName = album.getName();
+
+                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(artistName, title, albumName, imageUrl, previewUrl));
+            }
+
+        } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return searchResponseDtoList;
+    }
+    public List<SpotifySearchResponseDto> getKoreanHot100Chart() {
+        SpotifyApi spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(SpotifyConfig.getAccessToken())
+                .build();
+
+        List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
+
+        try {
+            GetPlaylistRequest getHot100PlaylistRequest = spotifyApi.getPlaylist("37i9dQZEVXbJZGli0rRP3r") // HOT 100 playlist ID
                     .build();
 
             Playlist hot100Playlist = getHot100PlaylistRequest.execute();

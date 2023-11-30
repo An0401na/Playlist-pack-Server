@@ -44,5 +44,11 @@ public class SpotifyController {
         return spotifyService.getHot100Chart();
     }
 
+    @GetMapping("/KoreanHot100")
+    public List<SpotifySearchResponseDto> getKoreanHot100chart()
+            throws IOException, SpotifyWebApiException {
+        return spotifyService.getKoreanHot100Chart();
+    }
+
 
 }
