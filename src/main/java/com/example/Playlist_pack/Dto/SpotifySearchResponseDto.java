@@ -10,4 +10,5 @@ public class SpotifySearchResponseDto {
     private String title;
     private String albumName;
     private String imageUrl;
+    private String previewUrl;
 }
