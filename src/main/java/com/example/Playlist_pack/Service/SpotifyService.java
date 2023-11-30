@@ -5,6 +5,7 @@ import com.example.Playlist_pack.Dto.SpotifyDtoMapper;
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import se.michaelthelin.spotify.SpotifyApi;
@@ -135,6 +136,43 @@ public class SpotifyService {
         } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        return searchResponseDtoList;
+    }
+    public List<SpotifySearchResponseDto> getHot100Chart() {
+        SpotifyApi spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(SpotifyConfig.getAccessToken())
+                .build();
+
+        List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
+
+        try {
+            GetPlaylistRequest getHot100PlaylistRequest = spotifyApi.getPlaylist("37i9dQZEVXbMDoHDwVN2tF") // HOT 100 playlist ID
+                    .build();
+
+            Playlist hot100Playlist = getHot100PlaylistRequest.execute();
+            List<PlaylistTrack> tracks = Arrays.asList(hot100Playlist.getTracks().getItems());
+
+            for (PlaylistTrack playlistTrack : tracks) {
+                Track track = (Track) playlistTrack.getTrack();
+                String title = track.getName();
+                String previewUrl = track.getPreviewUrl();
+
+                AlbumSimplified album = track.getAlbum();
+                ArtistSimplified[] artists = album.getArtists();
+                String artistName = artists[0].getName();
+
+                Image[] images = album.getImages();
+                String imageUrl = (images.length > 0) ? images[0].getUrl() : "NO_IMAGE";
+
+                String albumName = album.getName();
+
+                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(artistName, title, albumName, imageUrl, previewUrl));
+            }
+
+        } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
         return searchResponseDtoList;
     }
 

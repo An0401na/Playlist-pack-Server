@@ -38,4 +38,11 @@ public class SpotifyController {
             throws IOException, SpotifyWebApiException {
         return spotifyService.searchByGenre(genre);
     }
+    @GetMapping("/TodayHot100")
+    public List<SpotifySearchResponseDto> getHot100Chart()
+            throws IOException, SpotifyWebApiException {
+        return spotifyService.getHot100Chart();
+    }
+
+
 }
