@@ -42,6 +42,11 @@ public class UserService {
             return new Response(-1L, "UNAUTHORIZED", "해당 닉네임을 가진 User가 존재하지 않습니다. ");
         }
     }
+    public String getPasswordByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        return userOptional.map(User::getPassword).orElse(null);
+    }
 
     @Getter
     public static class Response {

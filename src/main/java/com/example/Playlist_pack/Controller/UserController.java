@@ -6,13 +6,15 @@ import com.example.Playlist_pack.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -34,6 +36,16 @@ public class UserController {
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         } else {
             return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+    @GetMapping("/get-password")
+    public ResponseEntity<String> getPasswordByEmail(@RequestParam String email) {
+        String password = userService.getPasswordByEmail(email);
+
+        if (password != null) {
+            return new ResponseEntity<>("사용자 비밀번호: " + password, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("해당 이메일로 등록된 회원이 없습니다.", HttpStatus.NOT_FOUND);
         }
     }
 }
