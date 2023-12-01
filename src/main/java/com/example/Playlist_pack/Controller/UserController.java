@@ -1,5 +1,6 @@
 package com.example.Playlist_pack.Controller;
 
+import com.example.Playlist_pack.Dto.LoginDto;
 import com.example.Playlist_pack.Dto.UserDto;
 import com.example.Playlist_pack.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,15 @@ public class UserController {
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
         userService.registerUser(userDto);
         return new ResponseEntity<>("회원가입이 완료됬습니다.", HttpStatus.CREATED);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<UserService.Response> loginUser(@RequestBody LoginDto loginDto) {
+        UserService.Response response = userService.loginUser(loginDto);
+
+        if ("UNAUTHORIZED".equals(response.getStatus())) {
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 }
