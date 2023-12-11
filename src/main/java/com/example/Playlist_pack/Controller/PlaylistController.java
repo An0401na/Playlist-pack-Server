@@ -1,29 +1,22 @@
 package com.example.Playlist_pack.Controller;
 
-import com.example.Playlist_pack.Domain.Playlist;
+import com.example.Playlist_pack.Dto.PlaylistDto;
 import com.example.Playlist_pack.Service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/playlists")
 public class PlaylistController {
 
-    private final PlaylistService playlistService;
-
     @Autowired
-    public PlaylistController(PlaylistService playlistService) {
-        this.playlistService = playlistService;
-    }
+    private PlaylistService playlistService;
 
-    @GetMapping("/{userId}/{playlistId}")
-    public Playlist getPlaylistByUserIdAndPlaylistId(
-            @PathVariable String userId,
-            @PathVariable Long playlistId
-    ) {
-        return playlistService.getPlaylistByUserIdAndPlaylistId(userId, playlistId);
+    @PostMapping("/{userid}")
+    public ResponseEntity<String> createPlaylist(@PathVariable("userid") String userId, @RequestBody PlaylistDto playlistDto) {
+        Long playlistId = playlistService.createPlaylist(playlistDto);
+        return new ResponseEntity<>("선물이 등록되었습니다.", HttpStatus.CREATED);
     }
 }

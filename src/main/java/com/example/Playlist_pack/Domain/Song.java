@@ -34,4 +34,5 @@ public class Song {
     // Playlist와의 연관관계 설정, 연관관계의 주인으로 설정
     @OneToOne(mappedBy = "song")
     private Playlist playlist;
+
 }

@@ -1,9 +1,12 @@
 package com.example.Playlist_pack.Repository;
 
 import com.example.Playlist_pack.Domain.Playlist;
+import com.example.Playlist_pack.Domain.PlaylistPack;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
-    Playlist findByUserIdAndPlaylistId(String userId, Long playlistId);
+    Optional<Playlist> findByPlaylistPack(PlaylistPack playlistPack);
 
 }

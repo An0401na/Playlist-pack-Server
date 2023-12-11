@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.ArrayList;
@@ -37,4 +36,5 @@ public class PlaylistPack {
     // Playlist와의 연관관계 설정, 1:N 연관관계의 주인으로 설정
     @OneToMany(mappedBy = "playlistPack", cascade = CascadeType.ALL)
     private List<Playlist> playlists = new ArrayList<>();
+
 }
