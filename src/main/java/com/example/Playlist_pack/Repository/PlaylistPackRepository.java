@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface PlaylistPackRepository extends JpaRepository<PlaylistPack, Long> {
-    Optional<PlaylistPack> findByUserId(Long userId);
+    Optional<PlaylistPack> findByUser_UserId(Long userId);
 }
