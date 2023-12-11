@@ -21,7 +21,7 @@ public class PlaylistPackService {
     }
 
     public List<Playlist> getPlaylistsByUserId(Long userId) {
-        Optional<PlaylistPack> optionalPlaylistPack = playlistPackRepository.findByUserId(userId);
+        Optional<PlaylistPack> optionalPlaylistPack = playlistPackRepository.findByUser_UserId(userId);
 
         if (optionalPlaylistPack.isPresent()) {
             PlaylistPack playlistPack = optionalPlaylistPack.get();
