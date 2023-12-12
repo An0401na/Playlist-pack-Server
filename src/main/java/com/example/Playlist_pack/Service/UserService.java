@@ -68,9 +68,9 @@ public class UserService {
         if (user == null) {
             //위의조건 만족&DB에 해당 닉네임이 부존재시 등록후 자동로그인
             User newUser = saveNewUser(loginRequest);
-            createLoginResponseDTO(newUser);
+            LoginResponseDTO loginResponseDTO = createLoginResponseDTO(newUser);
 
-            return new ResponseEntity<>(newUser,HttpStatus.CREATED);
+            return new ResponseEntity<>(loginResponseDTO,HttpStatus.CREATED);
         }
 
         if (user!=null && !user.getPassword().equals(loginRequest.getPassword())) {
@@ -81,7 +81,8 @@ public class UserService {
 
         // 해당 조건 모두 통과시 Statuscode 200 반환
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        LoginResponseDTO loginResponseDTO = createLoginResponseDTO(user);
+        return new ResponseEntity<>(loginResponseDTO, HttpStatus.OK);
     }
 
     private LoginResponseDTO createLoginResponseDTO(User newUser) {
