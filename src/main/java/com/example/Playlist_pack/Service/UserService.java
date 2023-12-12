@@ -57,15 +57,6 @@ public class UserService {
     public ResponseEntity<?> loginUser(LoginDto loginRequest) {
         User user = userRepository.findByNickname(loginRequest.getNickname());
 
-        if (user == null) {
-            User newUser = userRepository.save(user);
-            return new ResponseEntity<>(newUser,HttpStatus.CREATED);
-        }
-
-        if (!user.getPassword().equals(loginRequest.getPassword())) {
-            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.FORBIDDEN);
-        }
-
         if (user.getNickname().length() <= 2 || user.getNickname().length() >= 8) {
             return new ResponseEntity<>("닉네임 글자수는 2자 이상 8자 이하이어야 합니다.", HttpStatus.CONFLICT);
         }
@@ -73,10 +64,21 @@ public class UserService {
         if (user.getPassword().length() < 8 || !containsDigitAndLetter(user.getPassword())) {
             return new ResponseEntity<>("비밀번호는 숫자와 영문자를 포함한 8자 이상이어야 합니다.", HttpStatus.CONFLICT);
         }
+        if (user == null) {
+            //위의조건 만족&DB에 해당 닉네임이 부존재시 등록후 자동로그인
+            User newUser = userRepository.save(user);
+            return new ResponseEntity<>(newUser,HttpStatus.CREATED);
+        }
 
-        // 해당 불가조건 모두 통과시 Statuscode 201 반환
+        if (user!=null && !user.getPassword().equals(loginRequest.getPassword())) {
+            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.FORBIDDEN);
+        }
 
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+
+
+        // 해당 조건 모두 통과시 Statuscode 200 반환
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     private boolean containsDigitAndLetter(String password) {
