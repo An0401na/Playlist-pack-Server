@@ -2,13 +2,13 @@ package com.example.Playlist_pack.Service;
 
 import com.example.Playlist_pack.Domain.Playlist;
 import com.example.Playlist_pack.Domain.PlaylistPack;
+import com.example.Playlist_pack.Global.exception.HttpExceptionCode;
+import com.example.Playlist_pack.Global.exception.custom.BusinessException;
 import com.example.Playlist_pack.Repository.PlaylistPackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PlaylistPackService {
@@ -21,14 +21,10 @@ public class PlaylistPackService {
     }
 
     public List<Playlist> getPlaylistsByUserId(Long userId) {
-        Optional<PlaylistPack> optionalPlaylistPack = playlistPackRepository.findByUser_UserId(userId);
+        PlaylistPack playlistPack = playlistPackRepository.findByUser_UserId(userId)
+                .orElseThrow(() -> new BusinessException(HttpExceptionCode.PLAYLISTPACK_NOT_FOUND));
+        // 만약 유저에 대한 PlaylistPack이 없다면 예외 처리를 수행
 
-        if (optionalPlaylistPack.isPresent()) {
-            PlaylistPack playlistPack = optionalPlaylistPack.get();
-            return playlistPack.getPlaylists();
-        } else {
-            // 만약 유저에 대한 PlaylistPack이 없다면 빈 리스트를 반환하거나 예외 처리를 수행할 수 있습니다.
-            return List.of();
-        }
+        return playlistPack.getPlaylists();
     }
 }
