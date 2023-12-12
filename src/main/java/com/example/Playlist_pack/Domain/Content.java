@@ -38,4 +38,7 @@ public class Content extends BaseEntity {
         this.totalVoteCnt = totalVoteCnt;
     }
 
+    public void updateViewCnt() {
+        this.viewCnt ++;
+    }
 }
