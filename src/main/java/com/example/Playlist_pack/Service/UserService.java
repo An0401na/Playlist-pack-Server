@@ -2,6 +2,7 @@ package com.example.Playlist_pack.Service;
 
 import com.example.Playlist_pack.Domain.User;
 import com.example.Playlist_pack.Dto.LoginDto;
+import com.example.Playlist_pack.Dto.LoginResponseDTO;
 import com.example.Playlist_pack.Dto.UserDto;
 import com.example.Playlist_pack.Repository.UserRepository;
 import java.util.Optional;
@@ -66,7 +67,9 @@ public class UserService {
         }
         if (user == null) {
             //위의조건 만족&DB에 해당 닉네임이 부존재시 등록후 자동로그인
-            User newUser = getNewUser(loginRequest);
+            User newUser = saveNewUser(loginRequest);
+            createLoginResponseDTO(newUser);
+
             return new ResponseEntity<>(newUser,HttpStatus.CREATED);
         }
 
@@ -81,7 +84,15 @@ public class UserService {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    private User getNewUser(LoginDto loginRequest) {
+    private LoginResponseDTO createLoginResponseDTO(User newUser) {
+        LoginResponseDTO loginResponseDTO = LoginResponseDTO.builder()
+                .nickname(newUser.getNickname())
+                .userId(newUser.getUserId())
+                .build();
+        return loginResponseDTO;
+    }
+
+    private User saveNewUser(LoginDto loginRequest) {
         User user;
         user = new User();
         user.setNickname(loginRequest.getNickname());
