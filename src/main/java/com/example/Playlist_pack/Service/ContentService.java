@@ -1,8 +1,7 @@
 package com.example.Playlist_pack.Service;
 
 import com.example.Playlist_pack.Domain.Content;
-import com.example.Playlist_pack.Global.exception.HttpExceptionCode;
-import com.example.Playlist_pack.Global.exception.custom.BusinessException;
+import com.example.Playlist_pack.Global.exception.custom.content.ContentNotFoundException;
 import com.example.Playlist_pack.Repository.ContentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ public class ContentService {
 
     public Content searchContent(Long contentId) {
         Content content = contentRepository.findById(contentId)
-                .orElseThrow(() -> new BusinessException(HttpExceptionCode.CONTENT_NOT_FOUND));
+                .orElseThrow(ContentNotFoundException::new);
 
         content.updateViewCnt();
 
@@ -29,8 +28,7 @@ public class ContentService {
 
     public Content likes(Long contentId) {
         Content content = contentRepository.findById(contentId)
-                .orElseThrow(() -> new BusinessException(HttpExceptionCode.CONTENT_NOT_FOUND));
-
+                .orElseThrow(ContentNotFoundException::new);
         content.updateLikeCnt();
         return content;
     }
