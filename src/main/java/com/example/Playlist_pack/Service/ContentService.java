@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class ContentService {
@@ -19,7 +19,19 @@ public class ContentService {
 
 
     public Content searchContent(Long contentId) {
-        return contentRepository.findById(contentId)
+        Content content = contentRepository.findById(contentId)
                 .orElseThrow(() -> new BusinessException(HttpExceptionCode.CONTENT_NOT_FOUND));
+
+        content.updateViewCnt();
+
+        return content;
+    }
+
+    public Content likes(Long contentId) {
+        Content content = contentRepository.findById(contentId)
+                .orElseThrow(() -> new BusinessException(HttpExceptionCode.CONTENT_NOT_FOUND));
+
+        content.updateLikeCnt();
+        return content;
     }
 }

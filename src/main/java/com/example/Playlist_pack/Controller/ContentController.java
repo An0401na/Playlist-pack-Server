@@ -18,4 +18,10 @@ public class ContentController {
         return HttpResponse.okBuild(ContentRespnseDto.from(contentService.searchContent(contentId)));
     }
 
+
+    @PatchMapping("/likes/{contentId}")
+    public HttpResponse<ContentRespnseDto> likes(@PathVariable Long contentId){
+        return HttpResponse.okBuild(ContentRespnseDto.from(contentService.likes(contentId)));
+    }
+
 }

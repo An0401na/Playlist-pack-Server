@@ -41,4 +41,8 @@ public class Content extends BaseEntity {
     public void updateViewCnt() {
         this.viewCnt ++;
     }
+
+    public void updateLikeCnt() {
+        this.likeCnt ++;
+    }
 }
