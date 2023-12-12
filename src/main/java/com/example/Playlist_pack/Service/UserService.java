@@ -7,6 +7,8 @@ import com.example.Playlist_pack.Repository.UserRepository;
 import java.util.Optional;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,20 +30,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public Response loginUser(LoginDto loginDto) {
-        Optional<User> userOptional = userRepository.findByNickname(loginDto.getNickname());
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            if (loginDto.getPassword().equals(user.getPassword())) {
-                return new Response(user.getUserId(), "OK");
-            } else {
-                return new Response(-1L, "UNAUTHORIZED", "비밀번호가 일치하지 않습니다.");
-            }
-        } else {
-            return new Response(-1L, "UNAUTHORIZED", "해당 닉네임을 가진 User가 존재하지 않습니다. ");
-        }
-    }
     public String getPasswordByEmail(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
@@ -64,5 +53,28 @@ public class UserService {
             this.status = status;
             this.error = error;
         }
+    }
+    public ResponseEntity<?> loginUser(LoginDto loginRequest) {
+        User user = userRepository.findByNickname(loginRequest.getNickname());
+
+        if (user == null || !user.getPassword().equals(loginRequest.getPassword())) {
+            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getNickname().length() <= 2 || user.getNickname().length() >= 8) {
+            return new ResponseEntity<>("닉네임 글자수는 2자 이상 8자 이하이어야 합니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getPassword().length() < 8 || !containsDigitAndLetter(user.getPassword())) {
+            return new ResponseEntity<>("비밀번호는 숫자와 영문자를 포함한 8자 이상이어야 합니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        // 해당 불가조건 모두 통과시 Statuscode 200 반환
+
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    private boolean containsDigitAndLetter(String password) {
+        return password.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$");
     }
 }

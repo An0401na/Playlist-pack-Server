@@ -32,14 +32,10 @@ public class UserController {
         return new ResponseEntity<>("회원가입이 완료됬습니다.", HttpStatus.CREATED);
     }
     @PostMapping("/login")
-    public ResponseEntity<UserService.Response> loginUser(@RequestBody LoginDto loginDto) {
-        UserService.Response response = userService.loginUser(loginDto);
+    public ResponseEntity<?> loginUser(@RequestBody LoginDto loginDto) {
+        ResponseEntity<?> responseEntity = userService.loginUser(loginDto);
 
-        if ("UNAUTHORIZED".equals(response.getStatus())) {
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-        } else {
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
+        return responseEntity;
     }
     @GetMapping("/get-password")
     public ResponseEntity<String> getPasswordByEmail(@RequestParam String email) {
