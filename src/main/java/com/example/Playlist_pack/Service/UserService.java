@@ -78,7 +78,8 @@ public class UserService {
         }
 
         if (user!=null && !user.getPassword().equals(loginRequest.getPassword())) {
-            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.FORBIDDEN);
+            LoginErrorDTO loginErrorDTO = createLoginErrorDTO("비밀번호가 일치하지 않습니다.");
+            return new ResponseEntity<>(loginErrorDTO, HttpStatus.FORBIDDEN);
         }
 
 
