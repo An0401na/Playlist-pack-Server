@@ -57,7 +57,12 @@ public class UserService {
     public ResponseEntity<?> loginUser(LoginDto loginRequest) {
         User user = userRepository.findByNickname(loginRequest.getNickname());
 
-        if (user == null || !user.getPassword().equals(loginRequest.getPassword())) {
+        if (user == null) {
+            User newUser = userRepository.save(user);
+            return new ResponseEntity<>(newUser,HttpStatus.CREATED);
+        }
+
+        if (!user.getPassword().equals(loginRequest.getPassword())) {
             return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.FORBIDDEN);
         }
 
