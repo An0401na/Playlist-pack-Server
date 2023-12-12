@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public HttpResponse<ErrorResponseDto> businessExceptionHandle(BusinessException e) {
@@ -24,16 +23,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public HttpResponse allUncaughtHandle(Exception e) {
+    public ResponseEntity<ErrorResponseDto> allUncaughtHandle(Exception e) {
         log.error("allUncaughtHandle : {}", e);
-        return HttpResponse.internalServerErrorBuild(e);
+        return ResponseEntity.internalServerError().build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponseDto> methodArgumentNotValidExceptionHandle(MethodArgumentNotValidException e) {
         log.error("methodArgumentNotValidException : {}", e);
-        return HttpResponse.badRequest()
+        return ResponseEntity.badRequest()
                 .body(ErrorResponseDto.from(HttpStatus.BAD_REQUEST, e.getFieldErrors().get(0).getDefaultMessage()));
     }
 }
