@@ -13,7 +13,7 @@ public class VoteLog extends BaseEntity {
 
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long voteLongId;
+    private Long voteLogId;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
