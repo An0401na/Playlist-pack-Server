@@ -2,6 +2,7 @@ package com.example.Playlist_pack.Service;
 
 import com.example.Playlist_pack.Domain.User;
 import com.example.Playlist_pack.Dto.LoginDto;
+import com.example.Playlist_pack.Dto.LoginErrorDTO;
 import com.example.Playlist_pack.Dto.LoginResponseDTO;
 import com.example.Playlist_pack.Dto.UserDto;
 import com.example.Playlist_pack.Repository.UserRepository;
@@ -59,11 +60,14 @@ public class UserService {
         User user = userRepository.findByNickname(loginRequest.getNickname());
 
         if (loginRequest.getNickname().length() <= 2 || loginRequest.getNickname().length() >= 8) {
-            return new ResponseEntity<>("닉네임 글자수는 2자 이상 8자 이하이어야 합니다.", HttpStatus.CONFLICT);
+            LoginErrorDTO loginErrorDTO = createLoginErrorDTO("닉네임 글자수는 2자 이상 8자 이하이어야 합니다.");
+
+            return new ResponseEntity<>(loginErrorDTO, HttpStatus.CONFLICT);
         }
 
         if (loginRequest.getPassword().length() < 8 || !containsDigitAndLetter(loginRequest.getPassword())) {
-            return new ResponseEntity<>("비밀번호는 숫자와 영문자를 포함한 8자 이상이어야 합니다.", HttpStatus.CONFLICT);
+            LoginErrorDTO loginErrorDTO = createLoginErrorDTO("비밀번호는 숫자와 영문자를 포함한 8자 이상이어야 합니다.");
+            return new ResponseEntity<>(loginErrorDTO, HttpStatus.CONFLICT);
         }
         if (user == null) {
             //위의조건 만족&DB에 해당 닉네임이 부존재시 등록후 자동로그인
@@ -80,9 +84,15 @@ public class UserService {
 
 
         // 해당 조건 모두 통과시 Statuscode 200 반환
-
         LoginResponseDTO loginResponseDTO = createLoginResponseDTO(user);
         return new ResponseEntity<>(loginResponseDTO, HttpStatus.OK);
+    }
+
+    private LoginErrorDTO createLoginErrorDTO(String error) {
+        LoginErrorDTO loginErrorDTO = LoginErrorDTO.builder()
+                .Error(error)
+                .build();
+        return loginErrorDTO;
     }
 
     private LoginResponseDTO createLoginResponseDTO(User newUser) {
