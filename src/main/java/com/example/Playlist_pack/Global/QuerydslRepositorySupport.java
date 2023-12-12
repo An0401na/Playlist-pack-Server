@@ -73,6 +73,10 @@ public abstract class QuerydslRepositorySupport {
         return this.jpaQueryFactory.select(expr);
     }
 
+    protected JPAQuery<Integer>  selectOne() {
+        return this.jpaQueryFactory.selectOne();
+    }
+
     protected <T> JPAQuery<T> selectFrom(EntityPath<T> from) {
         return this.jpaQueryFactory.selectFrom(from);
     }
