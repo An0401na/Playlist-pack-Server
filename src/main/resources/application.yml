@@ -1,8 +1,3 @@
-#
-#spring.profiles:
-#  group:
-#    local: jwt, oauth
-#  active: local
 
 spring:
   profiles:
