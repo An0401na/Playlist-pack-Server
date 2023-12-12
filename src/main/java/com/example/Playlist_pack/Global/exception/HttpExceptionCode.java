@@ -12,7 +12,8 @@ public enum HttpExceptionCode {
     REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "요청을 찾을 수 없습니다."),
     INTERNAL_SERVER_EXCEPTION(
             HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부에서 오류가 발생했습니다."),
-    PLAYLISTPACK_NOT_FOUND(HttpStatus.NOT_FOUND, "유저의 플리보따리를 찾을 수 없습니다."),;
+    PLAYLISTPACK_NOT_FOUND(HttpStatus.NOT_FOUND, "유저의 플리보따리를 찾을 수 없습니다."),
+    CONTENT_NOT_FOUND(HttpStatus.NOT_FOUND, "요청한 컨텐츠를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

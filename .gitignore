@@ -37,3 +37,11 @@ out/
 .vscode/
 ##yml파일 제거#
 *.yml
+src/main/generated/com/example/Playlist_pack/Global/domain/QBaseEntity.java
+src/main/generated/com/example/Playlist_pack/Domain/QVoteLog.java
+src/main/generated/com/example/Playlist_pack/Domain/QVote.java
+src/main/generated/com/example/Playlist_pack/Domain/QUser.java
+src/main/generated/com/example/Playlist_pack/Domain/QSong.java
+src/main/generated/com/example/Playlist_pack/Domain/QPlaylistPack.java
+src/main/generated/com/example/Playlist_pack/Domain/QPlaylist.java
+src/main/generated/com/example/Playlist_pack/Domain/QContent.java
