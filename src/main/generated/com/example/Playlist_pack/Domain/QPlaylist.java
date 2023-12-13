@@ -36,8 +36,6 @@ public class QPlaylist extends EntityPathBase<Playlist> {
 
     public final QPlaylistPack playlistPack;
 
-    public final QSong song;
-
     public QPlaylist(String variable) {
         this(Playlist.class, forVariable(variable), INITS);
     }
@@ -57,7 +55,6 @@ public class QPlaylist extends EntityPathBase<Playlist> {
     public QPlaylist(Class<? extends Playlist> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.playlistPack = inits.isInitialized("playlistPack") ? new QPlaylistPack(forProperty("playlistPack"), inits.get("playlistPack")) : null;
-        this.song = inits.isInitialized("song") ? new QSong(forProperty("song"), inits.get("song")) : null;
     }
 
 }
