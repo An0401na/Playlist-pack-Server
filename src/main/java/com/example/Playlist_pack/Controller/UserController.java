@@ -26,25 +26,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
-        userService.registerUser(userDto);
-        return new ResponseEntity<>("회원가입이 완료됬습니다.", HttpStatus.CREATED);
-    }
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginDto loginDto) {
         ResponseEntity<?> responseEntity = userService.loginUser(loginDto);
 
         return responseEntity;
     }
-    @GetMapping("/get-password")
-    public ResponseEntity<String> getPasswordByEmail(@RequestParam String email) {
-        String password = userService.getPasswordByEmail(email);
 
-        if (password != null) {
-            return new ResponseEntity<>("사용자 비밀번호: " + password, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("해당 이메일로 등록된 회원이 없습니다.", HttpStatus.NOT_FOUND);
-        }
-    }
 }
