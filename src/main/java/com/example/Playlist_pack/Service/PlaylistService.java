@@ -1,31 +1,27 @@
 
 package com.example.Playlist_pack.Service;
 
-import com.example.Playlist_pack.Domain.Playlist;
-import com.example.Playlist_pack.Domain.PlaylistPack;
-import com.example.Playlist_pack.Domain.Song;
-import com.example.Playlist_pack.Dto.PlaylistDto;
+import com.example.Playlist_pack.Domain.User;
+import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
 import com.example.Playlist_pack.Repository.PlaylistRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.Playlist_pack.Repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class PlaylistService {
 
-    @Autowired
-    private PlaylistRepository playlistRepository;
 
-    public Long createPlaylist(PlaylistDto playlistDTO) {
-        Playlist playlist = Playlist.builder()
-                .coveridx(playlistDTO.getCoveridx())
-                .decoIdx(playlistDTO.getDecoIdx())
-                .colorIdx(playlistDTO.getColorIdx())
-                .letter(playlistDTO.getLetter())
-                .friendname(playlistDTO.getFriendname())
-                .build();
+    private final PlaylistRepository playlistRepository;
+    private final UserRepository userRepository;
 
-        return playlistRepository.save(playlist).getPlaylistId();
+    public void createPlaylist(PlaylistRegisterRequestDto playlistRegisterRequestDto) {
+        User user = userRepository.findById(playlistRegisterRequestDto.userId())
+                .orElseThrow();
+
+        playlistRepository.save(playlistRegisterRequestDto.toEntity(user));
     }
-
-
 }
