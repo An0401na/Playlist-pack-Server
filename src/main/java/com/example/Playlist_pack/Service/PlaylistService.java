@@ -2,8 +2,6 @@
 package com.example.Playlist_pack.Service;
 
 import com.example.Playlist_pack.Domain.Playlist;
-import com.example.Playlist_pack.Domain.PlaylistPack;
-import com.example.Playlist_pack.Domain.Song;
 import com.example.Playlist_pack.Dto.PlaylistDto;
 import com.example.Playlist_pack.Repository.PlaylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;

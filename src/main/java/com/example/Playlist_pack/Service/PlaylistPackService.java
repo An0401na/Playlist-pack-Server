@@ -1,7 +1,6 @@
 package com.example.Playlist_pack.Service;
 
 import com.example.Playlist_pack.Domain.Playlist;
-import com.example.Playlist_pack.Domain.PlaylistPack;
 import com.example.Playlist_pack.Global.exception.HttpExceptionCode;
 import com.example.Playlist_pack.Global.exception.custom.BusinessException;
 import com.example.Playlist_pack.Repository.PlaylistPackRepository;
