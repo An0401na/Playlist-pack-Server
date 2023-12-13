@@ -1,7 +1,7 @@
 package com.example.Playlist_pack.Repository;
 
 import com.example.Playlist_pack.Domain.VoteLog;
-import com.example.Playlist_pack.Global.QuerydslRepositorySupport;
+import com.example.Playlist_pack.Global.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

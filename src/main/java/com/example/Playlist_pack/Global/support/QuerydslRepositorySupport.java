@@ -1,4 +1,4 @@
-package com.example.Playlist_pack.Global;
+package com.example.Playlist_pack.Global.support;
 
 
 import com.querydsl.core.types.EntityPath;
