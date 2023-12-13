@@ -45,4 +45,8 @@ public class Content extends BaseEntity {
     public void updateLikeCnt() {
         this.likeCnt ++;
     }
+
+    public void updateTotalVoteCnt() {
+        this.totalVoteCnt++;
+    }
 }
