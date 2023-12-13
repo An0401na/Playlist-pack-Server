@@ -5,8 +5,8 @@ on:
     branches: [ main ]
 
 env:
-  PROJECT_NAME: cicd_practice
-  BUCKET_NAME: jueun-cicd-bucket
+  PROJECT_NAME: 플리보따리
+  BUCKET_NAME: playlist-pack
   CODE_DEPLOY_APP_NAME: codedeploy
   DEPLOYMENT_GROUP_NAME: CICD
 
