@@ -22,9 +22,14 @@ public class QPlaylist extends EntityPathBase<Playlist> {
 
     public static final QPlaylist playlist = new QPlaylist("playlist");
 
+    public final com.example.Playlist_pack.Global.domain.QBaseEntity _super = new com.example.Playlist_pack.Global.domain.QBaseEntity(this);
+
     public final StringPath colorIdx = createString("colorIdx");
 
-    public final StringPath coveridx = createString("coveridx");
+    public final StringPath coverIdx = createString("coverIdx");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
     public final StringPath decoIdx = createString("decoIdx");
 
@@ -34,7 +39,12 @@ public class QPlaylist extends EntityPathBase<Playlist> {
 
     public final NumberPath<Long> playlistId = createNumber("playlistId", Long.class);
 
-    public final QPlaylistPack playlistPack;
+    public final StringPath spotifyId = createString("spotifyId");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
+
+    public final QUser user;
 
     public QPlaylist(String variable) {
         this(Playlist.class, forVariable(variable), INITS);
@@ -54,7 +64,7 @@ public class QPlaylist extends EntityPathBase<Playlist> {
 
     public QPlaylist(Class<? extends Playlist> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.playlistPack = inits.isInitialized("playlistPack") ? new QPlaylistPack(forProperty("playlistPack"), inits.get("playlistPack")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }
