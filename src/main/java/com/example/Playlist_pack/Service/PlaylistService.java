@@ -1,13 +1,17 @@
 
 package com.example.Playlist_pack.Service;
 
+import com.example.Playlist_pack.Domain.Playlist;
 import com.example.Playlist_pack.Domain.User;
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
+import com.example.Playlist_pack.Global.exception.custom.user.UserNotFoundException;
 import com.example.Playlist_pack.Repository.PlaylistRepository;
 import com.example.Playlist_pack.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -20,8 +24,11 @@ public class PlaylistService {
 
     public void createPlaylist(PlaylistRegisterRequestDto playlistRegisterRequestDto) {
         User user = userRepository.findById(playlistRegisterRequestDto.userId())
-                .orElseThrow();
-
+                .orElseThrow(UserNotFoundException::new);
         playlistRepository.save(playlistRegisterRequestDto.toEntity(user));
+    }
+
+    public List<Playlist> searchPlayListPack(Long userId) {
+        return playlistRepository.findAllByUser_UserId(userId);
     }
 }

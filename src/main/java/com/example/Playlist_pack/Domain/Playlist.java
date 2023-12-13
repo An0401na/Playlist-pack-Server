@@ -19,7 +19,7 @@ public class Playlist extends BaseEntity {
 
     //포장지 idx
     @Column(nullable = false)
-    private String coveridx;
+    private String coverIdx;
 
     //장식 idx
     @Column(nullable = false)
@@ -43,7 +43,7 @@ public class Playlist extends BaseEntity {
     public Playlist(
             Long playlistId,
             String spotifyId,
-            String coveridx,
+            String coverIdx,
             String decoIdx,
             String colorIdx,
             String friendname,
@@ -52,7 +52,7 @@ public class Playlist extends BaseEntity {
     ){
         this.playlistId = playlistId;
         this.spotifyId = spotifyId;
-        this.coveridx = coveridx;
+        this.coverIdx = coverIdx;
         this.decoIdx = decoIdx;
         this.colorIdx = colorIdx;
         this.friendname = friendname;
