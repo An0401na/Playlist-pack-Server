@@ -7,8 +7,8 @@ on:
 env:
   PROJECT_NAME: cicd_practice
   BUCKET_NAME: jueun-cicd-bucket
-  CODE_DEPLOY_APP_NAME: cicd-practice
-  DEPLOYMENT_GROUP_NAME: cicd-practice
+  CODE_DEPLOY_APP_NAME: codedeploy
+  DEPLOYMENT_GROUP_NAME: CICD
 
 jobs:
   build:
