@@ -1,53 +1,65 @@
 package com.example.Playlist_pack.Domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.Playlist_pack.Global.domain.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Builder
-@AllArgsConstructor
-public class Playlist {
-    //vus
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Playlist extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playlistId;
 
-    private String coveridx;
-
+    @Column(nullable = false)
+    private String spotifyId;
 
     //포장지 idx
-    private String decoIdx;
-    //장식 idx
-    private String colorIdx;
-    //컬러 idx
+    @Column(nullable = false)
+    private String coveridx;
 
-    private String letter;
+    //장식 idx
+    @Column(nullable = false)
+    private String decoIdx;
+
+    //컬러 idx
+    @Column(nullable = false)
+    private String colorIdx;
+
+    @Column(nullable = false)
     private String friendname;
 
+    @Column(nullable = false)
+    private String letter;
 
-    // Song과의 연관관계 설정
-    @OneToOne
-    @JoinColumn(name = "song_id")
-    private Song song;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    // PlaylistPack과의 연관관계 설정
-    @ManyToOne
-    @JoinColumn(name = "playlistpack_id")
-    private PlaylistPack playlistPack;
+    @Builder
+    public Playlist(
+            Long playlistId,
+            String spotifyId,
+            String coveridx,
+            String decoIdx,
+            String colorIdx,
+            String friendname,
+            String letter,
+            User user
+    ){
+        this.playlistId = playlistId;
+        this.spotifyId = spotifyId;
+        this.coveridx = coveridx;
+        this.decoIdx = decoIdx;
+        this.colorIdx = colorIdx;
+        this.friendname = friendname;
+        this.letter = letter;
+        this.user = user;
+    }
+
+
 
 }
