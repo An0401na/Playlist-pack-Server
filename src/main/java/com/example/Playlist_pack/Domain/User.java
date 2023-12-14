@@ -33,8 +33,7 @@ public class User {
     private String password;
     private String nickname;
 
-    @OneToOne(mappedBy = "user")
-    private PlaylistPack playlistPack;
+
 
 
 }
