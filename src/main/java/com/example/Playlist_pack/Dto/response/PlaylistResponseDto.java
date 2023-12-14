@@ -7,13 +7,15 @@ import lombok.Builder;
 public record PlaylistResponseDto(Long playlistId,
                                   String coverIdx,
                                   String decoIdx,
-                                  String colorIdx) {
+                                  String colorIdx,
+                                  String spotifyId) {
     public static PlaylistResponseDto from(Playlist playlist){
         return PlaylistResponseDto.builder()
                 .playlistId(playlist.getPlaylistId())
                 .coverIdx(playlist.getCoverIdx())
                 .decoIdx(playlist.getDecoIdx())
                 .colorIdx(playlist.getColorIdx())
+                .spotifyId(playlist.getSpotifyId())
                 .build();
 
     }
