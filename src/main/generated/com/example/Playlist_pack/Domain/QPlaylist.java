@@ -31,6 +31,9 @@ public class QPlaylist extends EntityPathBase<Playlist> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
+
     public final StringPath decoIdx = createString("decoIdx");
 
     public final StringPath friendname = createString("friendname");
