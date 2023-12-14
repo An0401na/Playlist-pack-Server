@@ -34,6 +34,7 @@ public class SpotifyService {
 
         try {
             SearchTracksRequest searchTrackRequest = spotifyApi.searchTracks(trackname)
+
                     .limit(50)
                     .build();
 
@@ -43,6 +44,7 @@ public class SpotifyService {
             for (Track track : tracks) {
                 String title = track.getName();
                 String previewUrl=track.getPreviewUrl();
+                String spotifyId=track.getId();
 
 
                 AlbumSimplified album = track.getAlbum();
@@ -55,7 +57,7 @@ public class SpotifyService {
                 String albumName = album.getName();
 
 
-                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(artistName, title, albumName, imageUrl,previewUrl));
+                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(spotifyId,artistName, title, albumName, imageUrl,previewUrl));
             }
 
         } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
@@ -83,6 +85,7 @@ public class SpotifyService {
             for (Track track : tracks) {
                 String title = track.getName();
                 String previewUrl=track.getPreviewUrl();
+                String spotifyId=track.getId();
 
                 AlbumSimplified album = track.getAlbum();
                 ArtistSimplified[] artists = album.getArtists();
@@ -93,7 +96,7 @@ public class SpotifyService {
 
                 String albumName = album.getName();
 
-                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(artistName, title, albumName, imageUrl,previewUrl));
+                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(spotifyId,artistName, title, albumName, imageUrl,previewUrl));
             }
 
         } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
@@ -120,6 +123,7 @@ public class SpotifyService {
             for (Track track : tracks) {
                 String title = track.getName();
                 String previewUrl = track.getPreviewUrl();
+                String spotifyId=track.getId();
 
                 AlbumSimplified album = track.getAlbum();
                 ArtistSimplified[] artists = album.getArtists();
@@ -130,7 +134,7 @@ public class SpotifyService {
 
                 String albumName = album.getName();
 
-                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(artistName, title, albumName, imageUrl, previewUrl));
+                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(spotifyId,artistName, title, albumName, imageUrl, previewUrl));
             }
 
         } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
@@ -156,6 +160,7 @@ public class SpotifyService {
                 Track track = (Track) playlistTrack.getTrack();
                 String title = track.getName();
                 String previewUrl = track.getPreviewUrl();
+                String spotifyId=track.getId();
 
                 AlbumSimplified album = track.getAlbum();
                 ArtistSimplified[] artists = album.getArtists();
@@ -166,7 +171,7 @@ public class SpotifyService {
 
                 String albumName = album.getName();
 
-                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(artistName, title, albumName, imageUrl, previewUrl));
+                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(spotifyId,artistName, title, albumName, imageUrl, previewUrl));
             }
 
         } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
@@ -193,6 +198,7 @@ public class SpotifyService {
                 Track track = (Track) playlistTrack.getTrack();
                 String title = track.getName();
                 String previewUrl = track.getPreviewUrl();
+                String spotifyId= track.getId();
 
                 AlbumSimplified album = track.getAlbum();
                 ArtistSimplified[] artists = album.getArtists();
@@ -203,7 +209,7 @@ public class SpotifyService {
 
                 String albumName = album.getName();
 
-                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(artistName, title, albumName, imageUrl, previewUrl));
+                searchResponseDtoList.add(SpotifyDtoMapper.toSearchDto(spotifyId,artistName, title, albumName, imageUrl, previewUrl));
             }
 
         } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
@@ -212,5 +218,39 @@ public class SpotifyService {
 
         return searchResponseDtoList;
     }
+
+    public SpotifySearchResponseDto getTrackBySpotifyId(String spotifyId) {
+        SpotifyApi spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(SpotifyConfig.getAccessToken())
+                .build();
+
+        try {
+            GetTrackRequest getTrackRequest = spotifyApi.getTrack(spotifyId).build();
+
+            Track track = getTrackRequest.execute();
+
+            String title = track.getName();
+            String previewUrl = track.getPreviewUrl();
+            String spotifyIdFromApi = track.getId();
+
+            AlbumSimplified album = track.getAlbum();
+            ArtistSimplified[] artists = album.getArtists();
+            String artistName = artists[0].getName();
+
+            Image[] images = album.getImages();
+            String imageUrl = (images.length > 0) ? images[0].getUrl() : "NO_IMAGE";
+
+            String albumName = album.getName();
+
+            return SpotifyDtoMapper.toSearchDto(spotifyIdFromApi, artistName, title, albumName, imageUrl, previewUrl);
+
+        } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+            // Handle the error or throw an exception as needed
+            return null;
+        }
+    }
+
+
 
 }
