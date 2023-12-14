@@ -14,7 +14,7 @@ public record PlaylistRegisterRequestDto (
 
     @NotNull(message = "포장지 번호는 필수 입력값입니다.")
     @Schema(description = "포장지 번호", nullable = false, example = "")
-    String coveridx,
+    String coverIdx,
 
     @NotNull(message = "장식 번호는 필수 입력값입니다.")
     @Schema(description = "장식 번호", nullable = false, example = "")
@@ -38,7 +38,7 @@ public record PlaylistRegisterRequestDto (
 
     public Playlist toEntity(User user){
         return Playlist.builder()
-                .coveridx(coveridx)
+                .coverIdx(coverIdx)
                 .decoIdx(decoIdx)
                 .colorIdx(colorIdx)
                 .letter(letter)

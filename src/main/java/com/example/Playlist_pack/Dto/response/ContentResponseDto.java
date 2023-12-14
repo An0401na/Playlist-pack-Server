@@ -4,11 +4,11 @@ import com.example.Playlist_pack.Domain.Content;
 import lombok.Builder;
 
 @Builder
-public record ContentRespnseDto(Long viewCnt,
-                                Long likeCnt,
-                                Long totalVoteCnt) {
-    public static ContentRespnseDto from(Content content){
-        return ContentRespnseDto.builder()
+public record ContentResponseDto(Long viewCnt,
+                                 Long likeCnt,
+                                 Long totalVoteCnt) {
+    public static ContentResponseDto from(Content content){
+        return ContentResponseDto.builder()
                 .viewCnt(content.getViewCnt())
                 .likeCnt(content.getLikeCnt())
                 .totalVoteCnt(content.getTotalVoteCnt())

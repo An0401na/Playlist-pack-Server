@@ -26,7 +26,10 @@ public class QPlaylist extends EntityPathBase<Playlist> {
 
     public final StringPath colorIdx = createString("colorIdx");
 
-    public final StringPath coveridx = createString("coveridx");
+    public final StringPath coverIdx = createString("coverIdx");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
