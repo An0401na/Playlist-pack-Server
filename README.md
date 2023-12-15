@@ -3,8 +3,14 @@
 ### 🎄 플리보따리 🎄
 2023년도 크리스마스를 장식할 플레이리스트 소개 서비스
 
-</div>
+</div>  
 
+## 🖥️ 서버 구조
+<table>
+  <tr>
+    <td><img src="https://github.com/Playlist-pack/Server/assets/58305106/a9aadbf6-a43e-4481-be5d-1f3fbd5eb56e" width="600" height="300"></td>
+  </tr>
+</table>
 <br>
 
 ## 개발자
