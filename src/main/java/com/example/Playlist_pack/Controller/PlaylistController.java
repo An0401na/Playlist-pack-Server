@@ -1,14 +1,17 @@
 package com.example.Playlist_pack.Controller;
 
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
+import com.example.Playlist_pack.Dto.response.PlaylistOneResponseDto;
 import com.example.Playlist_pack.Dto.response.PlaylistResponseDto;
 import com.example.Playlist_pack.Global.dto.response.HttpResponse;
 import com.example.Playlist_pack.Service.PlaylistService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,6 +27,15 @@ public class PlaylistController {
         playlistService.createPlaylist(playlistRegisterRequestDto);
         return HttpResponse.createdBuilder().build();
     }
+
+    @GetMapping("/{userId}/{playlistId}")
+    @Operation(summary = "선물(플리) (하나) 조회", description = "사용자가 받은 선물 하나를 조회합니다.")
+    public HttpResponse<Optional<PlaylistOneResponseDto>> getPlaylistOne(@PathVariable Long userId, @PathVariable Long playlistId) {
+        return HttpResponse.okBuild(
+                playlistService.searchPlayListOne(userId, playlistId)
+                        .map(PlaylistOneResponseDto::from));
+    }
+
 
     @GetMapping("/{userId}")
     @Operation(summary = "플리보따리 조회 (선물 전체 조회)", description = "사용자가 받은 선물 상자를 전체 조회합니다.")
