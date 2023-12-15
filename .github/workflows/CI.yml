@@ -20,7 +20,7 @@ jobs:
           distribution: 'adopt'
       - name: (Release) Get current date
         id: date
-        run: echo "::set-output bane=date::$(date + '%Y/%m/%d')"
+        run: echo "::set-output name=date::$(date + '%Y/%m/%d')"
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
