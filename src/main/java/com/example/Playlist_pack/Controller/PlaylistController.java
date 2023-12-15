@@ -48,5 +48,4 @@ public class PlaylistController {
                         .map((Playlist playlist) -> PlaylistResponseDto.of(playlist, spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()) ))
                         .toList());
     }
-
 }
