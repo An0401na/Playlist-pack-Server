@@ -29,9 +29,7 @@ jobs:
         shell: bash
 
       - name: Build with Gradle
-        run: |
-          ./gradlew -version
-          ./gradlew :api :build -x test
+        run: ./gradlew build
         shell: bash
 
       - name: Make Zip File
