@@ -1,13 +1,14 @@
 package com.example.Playlist_pack.Controller;
 
+import com.example.Playlist_pack.Domain.Playlist;
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
 import com.example.Playlist_pack.Dto.response.PlaylistOneResponseDto;
 import com.example.Playlist_pack.Dto.response.PlaylistResponseDto;
 import com.example.Playlist_pack.Global.dto.response.HttpResponse;
 import com.example.Playlist_pack.Service.PlaylistService;
+import com.example.Playlist_pack.Service.SpotifyService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class PlaylistController {
 
     private final PlaylistService playlistService;
+    private final SpotifyService spotifyService;
 
     @PostMapping
     @Operation(summary = "선물 등록", description = "사용자가 선물을 전송합니다.")
@@ -43,7 +45,7 @@ public class PlaylistController {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListPack(userId)
                         .stream()
-                        .map(PlaylistResponseDto::from)
+                        .map((Playlist playlist) -> PlaylistResponseDto.of(playlist, spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()) ))
                         .toList());
     }
 
