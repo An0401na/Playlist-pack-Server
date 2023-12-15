@@ -36,6 +36,6 @@ public class PlaylistService {
     }
 
     public Optional<Playlist> searchPlayListOne(Long userId, Long playlistId) {
-        return playlistRepository.findByPlaylistIdAndUserId(userId, playlistId);
+        return playlistRepository.findByUserIdAndPlaylistId(userId, playlistId);
     }
 }
