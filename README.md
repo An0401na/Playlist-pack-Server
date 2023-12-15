@@ -1,6 +1,6 @@
 <div align="center">
 
-### 플리보따리
+### 🎄 플리보따리 🎄
 2023년도 크리스마스를 장식할 플레이리스트 소개 서비스
 
 </div>
@@ -8,7 +8,7 @@
 <br>
 
 ## 개발자
-- Back-end : [조영서](https://github.com/dudrhy12), [최동훈](https://github.com/ulsandonghun)
+- Back-end : [조영서](https://github.com/dudrhy12), [최동훈](https://github.com/ulsandonghun), [안나](https://github.com/An0401na)
 
 
 <br>
