@@ -4,6 +4,7 @@ package com.example.Playlist_pack.Service;
 import com.example.Playlist_pack.Domain.Playlist;
 import com.example.Playlist_pack.Domain.User;
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
+import com.example.Playlist_pack.Dto.response.PlaylistOneResponseDto;
 import com.example.Playlist_pack.Global.exception.custom.user.UserNotFoundException;
 import com.example.Playlist_pack.Repository.PlaylistRepository;
 import com.example.Playlist_pack.Repository.UserRepository;
@@ -11,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,5 +33,9 @@ public class PlaylistService {
 
     public List<Playlist> searchPlayListPack(Long userId) {
         return playlistRepository.findAllByUser_UserId(userId);
+    }
+
+    public Optional<Playlist> searchPlayListOne(Long userId, Long playlistId) {
+        return playlistRepository.findByPlaylistIdAndUserId(userId, playlistId);
     }
 }
