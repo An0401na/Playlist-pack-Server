@@ -1,5 +1,6 @@
 package com.example.Playlist_pack.Domain;
 
+import com.example.Playlist_pack.Global.domain.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,7 @@ import lombok.*;
 @Entity
 @Builder
 @AllArgsConstructor
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
