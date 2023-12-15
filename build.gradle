@@ -71,3 +71,5 @@ sourceSets {
 clean {
 	delete file(generated)
 }
+//배포시 -plain.jar 생성 안되게 하는 코드
+jar.enabled = false
