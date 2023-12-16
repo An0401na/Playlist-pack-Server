@@ -2,6 +2,9 @@ package com.example.Playlist_pack.Dto.request;
 
 import com.example.Playlist_pack.Domain.Playlist;
 import com.example.Playlist_pack.Domain.User;
+import com.example.Playlist_pack.Domain.enums.ColorType;
+import com.example.Playlist_pack.Domain.enums.CoverType;
+import com.example.Playlist_pack.Domain.enums.DecoType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
@@ -38,9 +41,9 @@ public record PlaylistRegisterRequestDto (
 
     public Playlist toEntity(User user){
         return Playlist.builder()
-                .coverIdx(coverIdx)
-                .decoIdx(decoIdx)
-                .colorIdx(colorIdx)
+                .coverIdx(CoverType.safeValueOf(coverIdx))
+                .decoIdx(DecoType.safeValueOf(decoIdx))
+                .colorIdx(ColorType.safeValueOf(colorIdx))
                 .letter(letter)
                 .friendname(friendname)
                 .spotifyId(spotifyId)
