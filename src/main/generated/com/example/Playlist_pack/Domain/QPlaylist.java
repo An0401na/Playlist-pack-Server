@@ -24,14 +24,14 @@ public class QPlaylist extends EntityPathBase<Playlist> {
 
     public final com.example.Playlist_pack.Global.domain.QBaseEntity _super = new com.example.Playlist_pack.Global.domain.QBaseEntity(this);
 
-    public final StringPath colorIdx = createString("colorIdx");
+    public final EnumPath<com.example.Playlist_pack.Domain.enums.ColorType> colorIdx = createEnum("colorIdx", com.example.Playlist_pack.Domain.enums.ColorType.class);
 
-    public final StringPath coverIdx = createString("coverIdx");
+    public final EnumPath<com.example.Playlist_pack.Domain.enums.CoverType> coverIdx = createEnum("coverIdx", com.example.Playlist_pack.Domain.enums.CoverType.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
-    public final StringPath decoIdx = createString("decoIdx");
+    public final EnumPath<com.example.Playlist_pack.Domain.enums.DecoType> decoIdx = createEnum("decoIdx", com.example.Playlist_pack.Domain.enums.DecoType.class);
 
     public final StringPath friendname = createString("friendname");
 

@@ -31,7 +31,7 @@ public class PlaylistController {
     }
 
     @GetMapping("/{userId}/{playlistId}")
-    @Operation(summary = "선물(플리) (하나) 조회", description = "사용자가 받은 선물 하나를 조회합니다.")
+    @Operation(summary = "X", description = "사용자가 받은 선물 하나를 조회합니다.")
     public HttpResponse<Optional<PlaylistOneResponseDto>> getPlaylistOne(@PathVariable Long userId, @PathVariable Long playlistId) {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListOne(userId, playlistId)
