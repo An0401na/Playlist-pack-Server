@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Christmass MADE BY DONGHUN</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .fireplace {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 0 0 50px 50px;
+      background-color: #b22222;
+    }
+    .flame {
+      position: absolute;
+      bottom: 100%;
+      width: 50%;
+      height: 50%;
+      background-color: #ff4500;
+      animation: flicker 1s infinite;
+    }
+    .flame:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 100%;
+      background-color: #ffff00;
+      border-radius: 50%;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+<div class="fireplace">
+  <div class="flame"></div>
+</div>
+</body>
+</html>
