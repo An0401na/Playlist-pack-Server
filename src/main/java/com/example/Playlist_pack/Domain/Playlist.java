@@ -1,6 +1,9 @@
 package com.example.Playlist_pack.Domain;
 
 
+import com.example.Playlist_pack.Domain.enums.ColorType;
+import com.example.Playlist_pack.Domain.enums.CoverType;
+import com.example.Playlist_pack.Domain.enums.DecoType;
 import com.example.Playlist_pack.Global.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,15 +22,18 @@ public class Playlist extends BaseEntity {
 
     //포장지 idx
     @Column(nullable = false)
-    private String coverIdx;
+    @Enumerated(EnumType.STRING)
+    private CoverType coverIdx;
 
     //장식 idx
     @Column(nullable = false)
-    private String decoIdx;
+    @Enumerated(EnumType.STRING)
+    private DecoType decoIdx;
 
     //컬러 idx
     @Column(nullable = false)
-    private String colorIdx;
+    @Enumerated(EnumType.STRING)
+    private ColorType colorIdx;
 
     @Column(nullable = false)
     private String friendname;
@@ -43,9 +49,9 @@ public class Playlist extends BaseEntity {
     public Playlist(
             Long playlistId,
             String spotifyId,
-            String coverIdx,
-            String decoIdx,
-            String colorIdx,
+            CoverType coverIdx,
+            DecoType decoIdx,
+            ColorType colorIdx,
             String friendname,
             String letter,
             User user
