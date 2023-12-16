@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequestMapping("/playlists")
 public class PlaylistController {
 
-    @Value("${s3url}")
+    @Value("${custom.s3url}")
     private String s3url;
 
     private final PlaylistService playlistService;
