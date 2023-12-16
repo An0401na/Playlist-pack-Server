@@ -19,11 +19,19 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final com.example.Playlist_pack.Global.domain.QBaseEntity _super = new com.example.Playlist_pack.Global.domain.QBaseEntity(this);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
+
     public final StringPath email = createString("email");
 
     public final StringPath nickname = createString("nickname");
 
     public final StringPath password = createString("password");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> updatedDate = _super.updatedDate;
 
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
