@@ -14,4 +14,6 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     Optional<Playlist> findByUserIdAndPlaylistId(@Param("userId") Long userId, @Param("playlistId") Long playlistId);
     List<Playlist> findAllByUser_UserId(Long userId);
 
+    List<Playlist> findAllByUser_Nickname(String nickname);
+
 }

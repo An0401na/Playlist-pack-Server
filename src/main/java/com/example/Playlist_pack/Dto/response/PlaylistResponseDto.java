@@ -8,18 +8,18 @@ import java.time.LocalDateTime;
 
 @Builder
 public record PlaylistResponseDto(Long playlistId,
-                                  String imageName,
-                                  String title,
-                                  String artistName,
-                                  String imageUrl,
-                                  String previewUrl,
-                                  String friendname,
-                                  String letter,
-                                  LocalDateTime createdDate ) {
+                                        String boxImageUrl,
+                                        String title,
+                                        String artistName,
+                                        String imageUrl,
+                                        String previewUrl,
+                                        String friendname,
+                                        String letter,
+                                        LocalDateTime createdDate ) {
     public static PlaylistResponseDto of(Playlist playlist, SpotifySearchResponseDto spotifySearchResponseDto){
         return PlaylistResponseDto.builder()
                 .playlistId(playlist.getPlaylistId())
-                .imageName(playlist.getCoverIdx()+"_"+playlist.getDecoIdx()+"_"+playlist.getColorIdx())
+                .boxImageUrl(playlist.getCoverIdx()+"_"+playlist.getDecoIdx()+"_"+playlist.getColorIdx())
                 .title(spotifySearchResponseDto.getTitle())
                 .artistName(spotifySearchResponseDto.getArtistName())
                 .imageUrl(spotifySearchResponseDto.getImageUrl())

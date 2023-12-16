@@ -2,6 +2,7 @@ package com.example.Playlist_pack.Controller;
 
 import com.example.Playlist_pack.Domain.Playlist;
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
+import com.example.Playlist_pack.Dto.response.PlaylistBoxResponseDto;
 import com.example.Playlist_pack.Dto.response.PlaylistOneResponseDto;
 import com.example.Playlist_pack.Dto.response.PlaylistResponseDto;
 import com.example.Playlist_pack.Global.dto.response.HttpResponse;
@@ -30,17 +31,28 @@ public class PlaylistController {
         return HttpResponse.createdBuilder().build();
     }
 
-    @GetMapping("/{userId}/{playlistId}")
+    @GetMapping
     @Operation(summary = "선물 단일 조회", description = "사용자가 받은 선물 하나를 조회합니다.")
-    public HttpResponse<Optional<PlaylistOneResponseDto>> getPlaylistOne(@PathVariable Long userId, @PathVariable Long playlistId) {
+    public HttpResponse<Optional<PlaylistOneResponseDto>> getPlaylistOne(@RequestParam Long userId, @RequestParam Long playlistId) {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListOne(userId, playlistId)
                         .map(PlaylistOneResponseDto::from));
     }
 
 
+    @GetMapping("/boxes")
+    @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
+    public HttpResponse<List<PlaylistBoxResponseDto>> getPlayListPackBoxes(@RequestParam String nickname){
+        return HttpResponse.okBuild(
+                playlistService.searchPlayListPack(nickname)
+                        .stream()
+                        .map(PlaylistBoxResponseDto::from)
+                        .toList());
+    }
+
+
     @GetMapping("/{userId}")
-    @Operation(summary = "플리보따리 조회 (선물 전체 조회)", description = "사용자가 받은 선물 상자를 전체 조회합니다.")
+    @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
     public HttpResponse<List<PlaylistResponseDto>> getPlayListPack(@PathVariable Long userId){
         return HttpResponse.okBuild(
                 playlistService.searchPlayListPack(userId)
