@@ -16,10 +16,10 @@ public record PlaylistResponseDto(Long playlistId,
                                         String friendname,
                                         String letter,
                                         LocalDateTime createdDate ) {
-    public static PlaylistResponseDto of(Playlist playlist, SpotifySearchResponseDto spotifySearchResponseDto){
+    public static PlaylistResponseDto of(Playlist playlist, SpotifySearchResponseDto spotifySearchResponseDto, String  s3url){
         return PlaylistResponseDto.builder()
                 .playlistId(playlist.getPlaylistId())
-                .boxImageUrl(playlist.getCoverIdx()+"_"+playlist.getDecoIdx()+"_"+playlist.getColorIdx())
+                .boxImageUrl(s3url+"gift-box/"+playlist.getCoverIdx()+"_"+playlist.getDecoIdx()+"_"+playlist.getColorIdx()+".jpg")
                 .title(spotifySearchResponseDto.getTitle())
                 .artistName(spotifySearchResponseDto.getArtistName())
                 .imageUrl(spotifySearchResponseDto.getImageUrl())
