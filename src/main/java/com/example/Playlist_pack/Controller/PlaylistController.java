@@ -10,6 +10,7 @@ import com.example.Playlist_pack.Service.PlaylistService;
 import com.example.Playlist_pack.Service.SpotifyService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/playlists")
 public class PlaylistController {
+
+    @Value("${s3url}")
+    private String s3url;
 
     private final PlaylistService playlistService;
     private final SpotifyService spotifyService;
@@ -46,7 +50,7 @@ public class PlaylistController {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListPack(nickname)
                         .stream()
-                        .map(PlaylistBoxResponseDto::from)
+                        .map(playlist -> PlaylistBoxResponseDto.of(playlist,s3url))
                         .toList());
     }
 
@@ -57,7 +61,7 @@ public class PlaylistController {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListPack(userId)
                         .stream()
-                        .map((Playlist playlist) -> PlaylistResponseDto.of(playlist, spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()) ))
+                        .map((Playlist playlist) -> PlaylistResponseDto.of(playlist, spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url ))
                         .toList());
     }
 }
