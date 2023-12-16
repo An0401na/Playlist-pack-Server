@@ -30,4 +30,5 @@ spotify:
     token-uri: https://accounts.spotify.com/api/token
     user-info-uri: https://api.spotify.com/v1/me
 
-s3url : ${s3url}
+custom:
+  s3url : ${s3url}
