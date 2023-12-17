@@ -21,8 +21,8 @@ public class SpotifyController {
     SpotifyService spotifyService =new SpotifyService();
 
     @GetMapping("/search/{trackname}")
-    public HttpResponse<List<SpotifySearchResponseDto>> searchTracksByTrackname(@PathVariable String trackname) throws IOException, ParseException, SpotifyWebApiException {
-        return HttpResponse.okBuild(spotifyService.SearchByTrackname(trackname));
+    public List<SpotifySearchResponseDto> searchTracksByTrackname(@PathVariable String trackname) throws IOException, ParseException, SpotifyWebApiException {
+        return spotifyService.SearchByTrackname(trackname);
     }
 
 
@@ -34,8 +34,8 @@ public class SpotifyController {
     }
 
     @GetMapping("/search/spotifyId/{spotifyId}")
-    public HttpResponse<SpotifySearchResponseDto> searchTracksBySpotifyId(@PathVariable String spotifyId) throws IOException, ParseException, SpotifyWebApiException {
-        return HttpResponse.okBuild(spotifyService.getTrackBySpotifyId(spotifyId));
+    public SpotifySearchResponseDto searchTracksBySpotifyId(@PathVariable String spotifyId) throws IOException, ParseException, SpotifyWebApiException {
+        return spotifyService.getTrackBySpotifyId(spotifyId);
     }
 
     @GetMapping("/search/genre/{genre}")
