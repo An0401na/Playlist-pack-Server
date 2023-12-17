@@ -1,10 +1,7 @@
 package com.example.Playlist_pack.Domain;
 
 import com.example.Playlist_pack.Global.domain.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 
@@ -21,6 +18,8 @@ public class User extends BaseEntity {
     private Long userId;
     private String email;
     private String password;
+
+    @Column(unique = true)
     private String nickname;
 
 }
