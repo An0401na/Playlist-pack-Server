@@ -23,8 +23,8 @@ public class PlaylistService {
     private final PlaylistRepository playlistRepository;
     private final UserRepository userRepository;
 
-    public void createPlaylist(PlaylistRegisterRequestDto playlistRegisterRequestDto) {
-        User user = userRepository.findById(playlistRegisterRequestDto.userId())
+    public void createPlaylist(PlaylistRegisterRequestDto playlistRegisterRequestDto, String nickname) {
+        User user = userRepository.findByNickname(nickname)
                 .orElseThrow(UserNotFoundException::new);
         playlistRepository.save(playlistRegisterRequestDto.toEntity(user));
     }
