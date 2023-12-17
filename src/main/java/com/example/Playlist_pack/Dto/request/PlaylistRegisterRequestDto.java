@@ -11,9 +11,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record PlaylistRegisterRequestDto (
 
-    @NotNull(message = "수신인 아이디는 필수 입력값입니다.")
-    @Schema(description = "수신인", nullable = false, example = "")
-    Long userId,
 
     @NotNull(message = "포장지 번호는 필수 입력값입니다.")
     @Schema(description = "포장지 번호", nullable = false, example = "")

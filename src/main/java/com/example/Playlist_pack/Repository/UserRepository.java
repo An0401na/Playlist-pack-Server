@@ -1,12 +1,13 @@
 package com.example.Playlist_pack.Repository;
 
 import com.example.Playlist_pack.Domain.User;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
-   User findByNickname(String nickname);
-    Optional<User> findByPassword(String password);
+    Optional<User> findByNickname(String nickname);
 
+    Optional<User> findByPassword(String password);
 }

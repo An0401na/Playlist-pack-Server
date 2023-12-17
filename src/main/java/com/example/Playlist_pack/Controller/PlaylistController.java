@@ -28,10 +28,10 @@ public class PlaylistController {
     private final PlaylistService playlistService;
     private final SpotifyService spotifyService;
 
-    @PostMapping
+    @PostMapping("/{nickname}")
     @Operation(summary = "선물 등록", description = "사용자가 선물을 전송합니다.")
-    public HttpResponse createPlaylist(@RequestBody PlaylistRegisterRequestDto playlistRegisterRequestDto) {
-        playlistService.createPlaylist(playlistRegisterRequestDto);
+    public HttpResponse createPlaylist(@RequestBody PlaylistRegisterRequestDto playlistRegisterRequestDto, @PathVariable String nickname) {
+        playlistService.createPlaylist(playlistRegisterRequestDto, nickname);
         return HttpResponse.createdBuilder().build();
     }
 
