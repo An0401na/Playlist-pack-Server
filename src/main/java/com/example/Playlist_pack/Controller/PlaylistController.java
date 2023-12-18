@@ -1,6 +1,6 @@
 package com.example.Playlist_pack.Controller;
 
-import com.example.Playlist_pack.Domain.Playlist;
+import com.example.Playlist_pack.Dto.SpotifyDtoMapper;
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
 import com.example.Playlist_pack.Dto.response.PlaylistBoxResponseDto;
 import com.example.Playlist_pack.Dto.response.PlaylistOneResponseDto;
@@ -61,7 +61,12 @@ public class PlaylistController {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListPack(userId)
                         .stream()
-                        .map((Playlist playlist) -> PlaylistResponseDto.of(playlist, spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url ))
+                        .map((playlist) -> PlaylistResponseDto.of(playlist,
+                                playlist.getSpotifyId() == null ?
+                                        SpotifyDtoMapper.toSearchDto(null, null,null,null,null,null) :
+                                        spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url ))
                         .toList());
     }
+
+
 }

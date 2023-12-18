@@ -17,7 +17,7 @@ public class Playlist extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playlistId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String spotifyId;
 
     //포장지 idx
