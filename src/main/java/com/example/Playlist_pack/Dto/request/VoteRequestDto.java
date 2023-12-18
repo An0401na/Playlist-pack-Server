@@ -11,7 +11,7 @@ public record VoteRequestDto(
         @NotNull
         @Schema(description = "컨텐츠 아이디", nullable = false)
         Long contentId,
-        @NotNull
+        
         @Schema(description = "사용자 아이디", nullable = false)
         Long userId,
         @NotNull
