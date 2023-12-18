@@ -31,7 +31,7 @@ public class VoteLogService {
     private final UserRepository userRepository;
 
 
-    public VoteLogResponseDto getVoteDetils(Long contentId, Long userId) {
+    public VoteLogResponseDto checkUserVoteStatus(Long contentId, Long userId) {
 
         Integer choice = voteLogQueryRepository.findChoiceByUserIdAndVoteContentId(contentId, userId);
 
@@ -42,6 +42,12 @@ public class VoteLogService {
         List<VoteResultResponseDto> voteResultResponseDtoList = getVoteResult(contentId);
 
         return VoteLogResponseDto.of(true, choice, voteResultResponseDtoList);
+    }
+
+
+
+    public List<VoteResultResponseDto> getVoteDetils(Long contentId) {
+        return getVoteResult(contentId);
     }
 
     private List<VoteResultResponseDto> getVoteResult(Long contentId) {
