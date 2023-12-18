@@ -12,7 +12,7 @@
       50% { opacity: 0.5; }
     }
     body {
-      background-color: #000;
+      background-color: #001f3f; /* Deep Blue */
       color: #fff;
       font-family: 'Courier New', Courier, monospace;
       display: flex;
@@ -35,10 +35,11 @@
     .snow:nth-child(odd) { background: #99ccff; }
     .fireplace {
       position: relative;
-      width: 100px;
-      height: 100px;
-      border-radius: 0 0 50px 50px;
+      width: 120px; /* Wider fireplace */
+      height: 120px; /* Taller fireplace */
+      border-radius: 0 0 60px 60px;
       background-color: #b22222;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
     }
     .flame {
       position: absolute;
@@ -56,14 +57,14 @@
       transform: translateX(-50%);
       width: 50%;
       height: 100%;
-      background-color: #ffff00;
+      background-color: #ff9100; /* Warmer flame color */
       border-radius: 50%;
     }
     .tree {
       position: absolute;
       bottom: 0;
       width: 20px;
-      height: 50px;
+      height: 80px; /* Taller tree */
       background-color: #008000;
       transform: translateY(100%);
     }
