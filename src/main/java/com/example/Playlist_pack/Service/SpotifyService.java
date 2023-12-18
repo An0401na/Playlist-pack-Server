@@ -3,23 +3,19 @@ package com.example.Playlist_pack.Service;
 import com.example.Playlist_pack.Config.SpotifyConfig;
 import com.example.Playlist_pack.Dto.SpotifyDtoMapper;
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import se.michaelthelin.spotify.SpotifyApi;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
+import se.michaelthelin.spotify.model_objects.specification.*;
+import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistRequest;
+import se.michaelthelin.spotify.requests.data.search.simplified.SearchTracksRequest;
+import se.michaelthelin.spotify.requests.data.tracks.GetTrackRequest;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.springframework.stereotype.Service;
-import se.michaelthelin.spotify.SpotifyApi;
-import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
-import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
-import se.michaelthelin.spotify.model_objects.specification.ArtistSimplified;
-import se.michaelthelin.spotify.model_objects.specification.Image;
-import se.michaelthelin.spotify.model_objects.specification.Paging;
-import se.michaelthelin.spotify.model_objects.specification.Playlist;
-import se.michaelthelin.spotify.model_objects.specification.PlaylistTrack;
-import se.michaelthelin.spotify.model_objects.specification.Track;
-import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistRequest;
-import se.michaelthelin.spotify.requests.data.search.simplified.SearchTracksRequest;
-import se.michaelthelin.spotify.requests.data.tracks.GetTrackRequest;
 
 @Service
 public class SpotifyService {
@@ -140,6 +136,8 @@ public class SpotifyService {
         }
         return searchResponseDtoList;
     }
+
+    @Cacheable(value = "hot100Cache", key = "'hot100'")
     public List<SpotifySearchResponseDto> getHot100Chart() {
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setAccessToken(SpotifyConfig.getAccessToken())
@@ -178,6 +176,7 @@ public class SpotifyService {
 
         return searchResponseDtoList;
     }
+    @Cacheable(value = "koreaHot100Cache", key = "'koreaHot100'")
     public List<SpotifySearchResponseDto> getKoreanHot100Chart() {
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setAccessToken(SpotifyConfig.getAccessToken())
