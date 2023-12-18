@@ -44,6 +44,7 @@ public class PlaylistController {
     }
 
 
+    
     @GetMapping("/boxes")
     @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
     public HttpResponse<List<PlaylistBoxResponseDto>> getPlayListPackBoxes(@RequestParam String nickname){
