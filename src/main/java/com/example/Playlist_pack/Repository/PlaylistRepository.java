@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
 
-    @Query("SELECT p FROM Playlist p JOIN p.user u WHERE u.id = :userId AND p.playlistId = :playlistId")
-    Optional<Playlist> findByUserIdAndPlaylistId(@Param("userId") Long userId, @Param("playlistId") Long playlistId);
+    @Query("SELECT p FROM Playlist p JOIN p.user u WHERE u.nickname = :nickname AND p.playlistId = :playlistId")
+    Optional<Playlist> findByUserNicknameAndPlaylistId(@Param("userId") Long userId, @Param("playlistId") Long playlistId);
     List<Playlist> findAllByUser_UserId(Long userId);
 
     List<Playlist> findAllByUser_Nickname(String nickname);

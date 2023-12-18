@@ -40,7 +40,7 @@ public class PlaylistController {
     public HttpResponse<Optional<PlaylistOneResponseDto>> getPlaylistOne(@RequestParam Long userId, @RequestParam Long playlistId) {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListOne(userId, playlistId)
-                        .map(PlaylistOneResponseDto::from));
+                        .map((Playlist playlist) -> PlaylistOneResponseDto.from(playlist, s3url)));
     }
 
 
