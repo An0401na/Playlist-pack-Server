@@ -1,7 +1,6 @@
 package com.example.Playlist_pack.Controller;
 
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
-import com.example.Playlist_pack.Global.dto.response.HttpResponse;
 import com.example.Playlist_pack.Service.SpotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
