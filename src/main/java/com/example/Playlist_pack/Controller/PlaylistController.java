@@ -1,5 +1,6 @@
 package com.example.Playlist_pack.Controller;
 
+import com.example.Playlist_pack.Domain.Playlist;
 import com.example.Playlist_pack.Dto.SpotifyDtoMapper;
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
 import com.example.Playlist_pack.Dto.response.PlaylistBoxResponseDto;
