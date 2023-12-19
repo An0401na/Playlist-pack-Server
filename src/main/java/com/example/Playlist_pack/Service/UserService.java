@@ -60,7 +60,7 @@ public class UserService {
     public ResponseEntity<?> loginUser(LoginDto loginRequest) {
         Optional<User> userOptional = userRepository.findByNickname(loginRequest.getNickname());
 
-        if (loginRequest.getNickname().length() <= 2 || loginRequest.getNickname().length() >= 8) {
+        if (loginRequest.getNickname().length() < 2 || loginRequest.getNickname().length() > 8) {
             LoginErrorDTO loginErrorDTO = createLoginErrorDTO("닉네임 글자수는 2자 이상 8자 이하이어야 합니다.");
 
             return new ResponseEntity<>(loginErrorDTO, HttpStatus.CONFLICT);
