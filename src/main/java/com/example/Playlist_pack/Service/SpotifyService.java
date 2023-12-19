@@ -146,7 +146,7 @@ public class SpotifyService {
         List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
         try {
-            GetPlaylistRequest getHot100PlaylistRequest = spotifyApi.getPlaylist("37i9dQZF1DXcBWIGoYBM5M") // HOT 100 playlist ID
+            GetPlaylistRequest getHot100PlaylistRequest = spotifyApi.getPlaylist("37i9dQZEVXbMDoHDwVN2tF") // HOT 100 playlist ID
                     .build();
 
             Playlist hot100Playlist = getHot100PlaylistRequest.execute();
