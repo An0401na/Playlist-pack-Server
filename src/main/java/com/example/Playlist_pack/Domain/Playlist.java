@@ -41,7 +41,7 @@ public class Playlist extends BaseEntity {
     @Column(nullable = false)
     private String friendname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 300)
     private String letter;
 
     @ManyToOne(fetch = FetchType.LAZY)
