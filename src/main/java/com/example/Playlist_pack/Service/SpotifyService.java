@@ -141,7 +141,6 @@ public class SpotifyService {
 
     @Cacheable(cacheNames = "hot100Cache", key = "'hot100'")
     public List<SpotifySearchResponseDto> getHot100Chart() {
-        log.info("투데이 핫 100 호출");
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setAccessToken(SpotifyConfig.getAccessToken())
                 .build();
