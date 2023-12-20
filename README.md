@@ -4,11 +4,12 @@
 
 🧧플리 보따리는 친구나 지인에게 음악🎤과 함께 비밀편지를 선물🎁해주는 익명 서비스입니다☃️
 
-</div>  
+</div>    
+
 ## 🖥️ 서버 구조
 <table>
   <tr>
-    <td><img src="https://github.com/Playlist-pack/Server/assets/58305106/a9aadbf6-a43e-4481-be5d-1f3fbd5eb56e" width="600" height="300"></td>
+    <td><img src="https://github.com/Playlist-pack/Server/assets/58305106/a9aadbf6-a43e-4481-be5d-1f3fbd5eb56e" width="650" height="300"></td>
   </tr>
 </table>
 <br>
