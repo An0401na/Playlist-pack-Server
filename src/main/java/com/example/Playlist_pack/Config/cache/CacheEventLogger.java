@@ -12,7 +12,7 @@ public class CacheEventLogger implements CacheEventListener<Object, Object> {
         log.info(
                 "cache event logger message. getKey: {} / getOldValue: {} / getNewValue:{}",
                 cacheEvent.getKey(),
-                cacheEvent.getOldValue() == null ? "없음" : cacheEvent.getOldValue().hashCode(),
-                cacheEvent.getNewValue() == null ? "없음" : cacheEvent.getNewValue().hashCode());
+                cacheEvent.getOldValue().hashCode(),
+                cacheEvent.getNewValue().hashCode());
     }
 }
