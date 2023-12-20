@@ -12,7 +12,7 @@
         <value-type>java.util.List</value-type>
 
         <expiry>
-            <ttl unit="seconds">60</ttl> <!-- ttl 설정 -->
+            <ttl unit="seconds">43200</ttl> <!-- ttl 12시간 -->
         </expiry>
 
         <listeners>
@@ -48,7 +48,7 @@
         <value-type>java.util.List</value-type>
 
         <expiry>
-            <ttl unit="seconds">60</ttl> <!-- ttl 설정 -->
+            <ttl unit="seconds">43200</ttl> <!-- ttl 설정  12시간 -->
         </expiry>
 
         <listeners>
