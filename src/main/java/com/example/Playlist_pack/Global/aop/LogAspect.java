@@ -46,6 +46,15 @@ public class LogAspect {
         Method method = methodSignature.getMethod();
         log.info("[START METHOD] : {}.{}", joinPoint.getTarget().getClass().getSimpleName(),method.getName());
 
+        Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            if(arg != null) {
+                log.info("type = {}", arg.getClass().getSimpleName());
+                log.info("value = {}", arg);
+            }
+
+        }
+
     }
     @After("controller() || service()")
     public void afterLogic(JoinPoint joinPoint) throws Throwable {
