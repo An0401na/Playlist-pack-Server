@@ -6,7 +6,10 @@ import com.example.Playlist_pack.Domain.enums.CoverType;
 import com.example.Playlist_pack.Domain.enums.DecoType;
 import com.example.Playlist_pack.Global.domain.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
