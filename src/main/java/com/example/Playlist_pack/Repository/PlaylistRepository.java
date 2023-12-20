@@ -1,6 +1,7 @@
 package com.example.Playlist_pack.Repository;
 
 import com.example.Playlist_pack.Domain.Playlist;
+import com.example.Playlist_pack.Domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,8 +13,6 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
 
     @Query("SELECT p FROM Playlist p JOIN p.user u WHERE u.nickname = :nickname AND p.playlistId = :playlistId")
     Optional<Playlist> findByUserNicknameAndPlaylistId(@Param("nickname") Long nickname, @Param("playlistId") Long playlistId);
-    List<Playlist> findAllByUser_UserId(Long userId);
-
-    List<Playlist> findAllByUser_Nickname(String nickname);
+    List<Playlist> findAllByUser(User user);
 
 }

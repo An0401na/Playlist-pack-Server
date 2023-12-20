@@ -29,11 +29,15 @@ public class PlaylistService {
     }
 
     public List<Playlist> searchPlayListPackByNickname(String nickname) {
-        return playlistRepository.findAllByUser_Nickname(nickname);
+        User user = userRepository.findByNickname(nickname)
+                        .orElseThrow(UserNotFoundException::new);
+        return playlistRepository.findAllByUser(user);
     }
 
     public List<Playlist> searchPlayListPackByUserId(Long userId) {
-        return playlistRepository.findAllByUser_UserId(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        return playlistRepository.findAllByUser(user);
     }
 
     public Optional<Playlist> searchPlayListOne(Long nickname, Long playlistId) {
