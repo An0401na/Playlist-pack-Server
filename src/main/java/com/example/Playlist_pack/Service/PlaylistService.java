@@ -19,7 +19,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PlaylistService {
 
-    private final SpotifyService spotifyService;
     private final PlaylistRepository playlistRepository;
     private final UserRepository userRepository;
 

@@ -3,6 +3,7 @@ package com.example.Playlist_pack.Service;
 import com.example.Playlist_pack.Config.SpotifyConfig;
 import com.example.Playlist_pack.Dto.SpotifyDtoMapper;
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import se.michaelthelin.spotify.SpotifyApi;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Slf4j
 public class SpotifyService {
     public List<SpotifySearchResponseDto> SearchByTrackname(String trackname) {
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
@@ -137,8 +139,9 @@ public class SpotifyService {
         return searchResponseDtoList;
     }
 
-    @Cacheable(value = "hot100Cache", key = "'hot100'")
+    @Cacheable(cacheNames = "hot100Cache", key = "'hot100'")
     public List<SpotifySearchResponseDto> getHot100Chart() {
+        log.info("투데이 핫 100 호출");
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setAccessToken(SpotifyConfig.getAccessToken())
                 .build();
@@ -176,7 +179,8 @@ public class SpotifyService {
 
         return searchResponseDtoList;
     }
-    @Cacheable(value = "koreaHot100Cache", key = "'koreaHot100'")
+
+    @Cacheable(cacheNames = "koreaHot100Cache", key = "'koreaHot100'")
     public List<SpotifySearchResponseDto> getKoreanHot100Chart() {
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setAccessToken(SpotifyConfig.getAccessToken())
