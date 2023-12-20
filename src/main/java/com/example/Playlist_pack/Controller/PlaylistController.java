@@ -8,6 +8,7 @@ import com.example.Playlist_pack.Dto.response.PlaylistResponseDto;
 import com.example.Playlist_pack.Global.dto.response.HttpResponse;
 import com.example.Playlist_pack.Service.PlaylistService;
 import com.example.Playlist_pack.Service.SpotifyService;
+import com.mysql.cj.util.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,11 +63,11 @@ public class PlaylistController {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListPackByUserId(userId)
                         .stream()
-                        .map((playlist) -> PlaylistResponseDto.of(playlist,
-                                playlist.getSpotifyId() == null ?
-                                        null:
-                                        spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url ))
+                        .map((playlist) -> StringUtils.isNullOrEmpty(playlist.getSpotifyId()) ?
+                                        PlaylistResponseDto.of(playlist, s3url) :
+                                        PlaylistResponseDto.of(playlist, spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url))
                         .toList());
     }
+
 
 }
