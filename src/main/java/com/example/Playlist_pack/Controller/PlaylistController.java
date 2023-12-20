@@ -1,7 +1,6 @@
 package com.example.Playlist_pack.Controller;
 
 import com.example.Playlist_pack.Domain.Playlist;
-import com.example.Playlist_pack.Dto.SpotifyDtoMapper;
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
 import com.example.Playlist_pack.Dto.response.PlaylistBoxResponseDto;
 import com.example.Playlist_pack.Dto.response.PlaylistOneResponseDto;
@@ -45,12 +44,12 @@ public class PlaylistController {
     }
 
 
-    
+
     @GetMapping("/boxes")
-    @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
+    @Operation(summary = "선물 상자 포장 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
     public HttpResponse<List<PlaylistBoxResponseDto>> getPlayListPackBoxes(@RequestParam String nickname){
         return HttpResponse.okBuild(
-                playlistService.searchPlayListPack(nickname)
+                playlistService.searchPlayListPackByNickname(nickname)
                         .stream()
                         .map(playlist -> PlaylistBoxResponseDto.of(playlist,s3url))
                         .toList());
@@ -58,17 +57,16 @@ public class PlaylistController {
 
 
     @GetMapping("/{userId}")
-    @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
+    @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보와 상자 내용과 함께 조회합니다.")
     public HttpResponse<List<PlaylistResponseDto>> getPlayListPack(@PathVariable Long userId){
         return HttpResponse.okBuild(
-                playlistService.searchPlayListPack(userId)
+                playlistService.searchPlayListPackByUserId(userId)
                         .stream()
                         .map((playlist) -> PlaylistResponseDto.of(playlist,
                                 playlist.getSpotifyId() == null ?
-                                        SpotifyDtoMapper.toSearchDto(null, null,null,null,null,null) :
+                                        null:
                                         spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url ))
                         .toList());
     }
-
 
 }

@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PlaylistService {
 
-
+    private final SpotifyService spotifyService;
     private final PlaylistRepository playlistRepository;
     private final UserRepository userRepository;
 
@@ -29,11 +29,11 @@ public class PlaylistService {
         playlistRepository.save(playlistRegisterRequestDto.toEntity(user));
     }
 
-    public List<Playlist> searchPlayListPack(String nickname) {
+    public List<Playlist> searchPlayListPackByNickname(String nickname) {
         return playlistRepository.findAllByUser_Nickname(nickname);
     }
 
-    public List<Playlist> searchPlayListPack(Long userId) {
+    public List<Playlist> searchPlayListPackByUserId(Long userId) {
         return playlistRepository.findAllByUser_UserId(userId);
     }
 
