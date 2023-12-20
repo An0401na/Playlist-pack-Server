@@ -11,4 +11,10 @@ public class SpotifyDtoMapper {
                 .previewUrl(previewUrl)
                 .build();
     }
+
+    public static SpotifyErrorDto toErrorDto(String message) {
+        return SpotifyErrorDto.builder()
+                .message(message)
+                .build();
+    }
 }

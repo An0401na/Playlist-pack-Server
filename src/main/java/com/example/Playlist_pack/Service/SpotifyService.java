@@ -1,6 +1,7 @@
 package com.example.Playlist_pack.Service;
 
 import com.example.Playlist_pack.Config.SpotifyConfig;
+import com.example.Playlist_pack.Dto.SpotifyDto;
 import com.example.Playlist_pack.Dto.SpotifyDtoMapper;
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
 import lombok.extern.slf4j.Slf4j;
@@ -219,7 +220,7 @@ public class SpotifyService {
         return searchResponseDtoList;
     }
 
-    public SpotifySearchResponseDto getTrackBySpotifyId(String spotifyId) {
+    public SpotifyDto getTrackBySpotifyId(String spotifyId) {
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setAccessToken(SpotifyConfig.getAccessToken())
                 .build();
@@ -246,8 +247,9 @@ public class SpotifyService {
 
         } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
             System.out.println("Error: " + e.getMessage());
-            // Handle the error or throw an exception as needed
-            return null;
+
+
+            return SpotifyDtoMapper.toErrorDto("노래가 존재하지 않습니다.");
         }
     }
 

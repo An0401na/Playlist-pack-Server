@@ -1,5 +1,6 @@
 package com.example.Playlist_pack.Controller;
 
+import com.example.Playlist_pack.Dto.SpotifyDto;
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
 import com.example.Playlist_pack.Service.SpotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class SpotifyController {
     }
 
     @GetMapping("/search/spotifyId/{spotifyId}")
-    public SpotifySearchResponseDto searchTracksBySpotifyId(@PathVariable String spotifyId) throws IOException, ParseException, SpotifyWebApiException {
+    public SpotifyDto searchTracksBySpotifyId(@PathVariable String spotifyId) throws IOException, ParseException, SpotifyWebApiException {
         return spotifyService.getTrackBySpotifyId(spotifyId);
     }
 

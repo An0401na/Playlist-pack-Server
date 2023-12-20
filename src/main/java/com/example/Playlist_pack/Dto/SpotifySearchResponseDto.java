@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Builder
 @Getter
-public class SpotifySearchResponseDto implements Serializable {
+public class SpotifySearchResponseDto implements Serializable,SpotifyDto {
     private String spotifyId;
     private String artistName;
     private String title;
