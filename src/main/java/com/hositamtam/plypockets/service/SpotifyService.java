@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.specification.*;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Transactional
 @Slf4j
 public class SpotifyService {
     public List<SpotifySearchResponseDto> SearchByTrackname(String trackname) {
