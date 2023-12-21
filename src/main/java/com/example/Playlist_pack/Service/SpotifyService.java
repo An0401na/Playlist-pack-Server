@@ -4,7 +4,9 @@ import com.example.Playlist_pack.Config.SpotifyConfig;
 import com.example.Playlist_pack.Dto.SpotifyDto;
 import com.example.Playlist_pack.Dto.SpotifyDtoMapper;
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
+import com.example.Playlist_pack.Global.exception.custom.spotify.SpotifyErrorException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import se.michaelthelin.spotify.SpotifyApi;
@@ -220,7 +222,7 @@ public class SpotifyService {
         return searchResponseDtoList;
     }
 
-    public SpotifyDto getTrackBySpotifyId(String spotifyId) {
+    public SpotifyDto getTrackBySpotifyId(String spotifyId)  {
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setAccessToken(SpotifyConfig.getAccessToken())
                 .build();
@@ -228,9 +230,13 @@ public class SpotifyService {
         try {
             GetTrackRequest getTrackRequest = spotifyApi.getTrack(spotifyId).build();
 
+
             Track track = getTrackRequest.execute();
 
+
+
             String title = track.getName();
+
             String previewUrl = track.getPreviewUrl();
             String spotifyIdFromApi = track.getId();
 
@@ -245,11 +251,9 @@ public class SpotifyService {
 
             return SpotifyDtoMapper.toSearchDto(spotifyIdFromApi, artistName, title, albumName, imageUrl, previewUrl);
 
-        } catch (IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
-            System.out.println("Error: " + e.getMessage());
+        } catch (RuntimeException | IOException | SpotifyWebApiException | ParseException e) {
+            throw new SpotifyErrorException();
 
-
-            return SpotifyDtoMapper.toErrorDto("노래가 존재하지 않습니다.");
         }
     }
 

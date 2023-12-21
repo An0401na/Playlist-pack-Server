@@ -1,6 +1,7 @@
 package com.example.Playlist_pack.Dto.response;
 
 import com.example.Playlist_pack.Domain.Playlist;
+import com.example.Playlist_pack.Dto.SpotifyDto;
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
 import lombok.Builder;
 
