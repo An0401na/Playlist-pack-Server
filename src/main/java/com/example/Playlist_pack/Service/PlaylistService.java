@@ -19,25 +19,28 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PlaylistService {
 
-
     private final PlaylistRepository playlistRepository;
     private final UserRepository userRepository;
 
-    public void createPlaylist(PlaylistRegisterRequestDto playlistRegisterRequestDto) {
-        User user = userRepository.findById(playlistRegisterRequestDto.userId())
+    public void createPlaylist(PlaylistRegisterRequestDto playlistRegisterRequestDto, String nickname) {
+        User user = userRepository.findByNickname(nickname)
                 .orElseThrow(UserNotFoundException::new);
         playlistRepository.save(playlistRegisterRequestDto.toEntity(user));
     }
 
-    public List<Playlist> searchPlayListPack(String nickname) {
-        return playlistRepository.findAllByUser_Nickname(nickname);
+    public List<Playlist> searchPlayListPackByNickname(String nickname) {
+        User user = userRepository.findByNickname(nickname)
+                        .orElseThrow(UserNotFoundException::new);
+        return playlistRepository.findAllByUser(user);
     }
 
-    public List<Playlist> searchPlayListPack(Long userId) {
-        return playlistRepository.findAllByUser_UserId(userId);
+    public List<Playlist> searchPlayListPackByUserId(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        return playlistRepository.findAllByUser(user);
     }
 
-    public Optional<Playlist> searchPlayListOne(Long userId, Long playlistId) {
-        return playlistRepository.findByUserIdAndPlaylistId(userId, playlistId);
+    public Optional<Playlist> searchPlayListOne(Long nickname, Long playlistId) {
+        return playlistRepository.findByUserNicknameAndPlaylistId(nickname, playlistId);
     }
 }

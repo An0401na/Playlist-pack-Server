@@ -6,12 +6,13 @@ import com.example.Playlist_pack.Dto.LoginErrorDTO;
 import com.example.Playlist_pack.Dto.LoginResponseDTO;
 import com.example.Playlist_pack.Dto.UserDto;
 import com.example.Playlist_pack.Repository.UserRepository;
-import java.util.Optional;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -57,9 +58,9 @@ public class UserService {
         }
     }
     public ResponseEntity<?> loginUser(LoginDto loginRequest) {
-        User user = userRepository.findByNickname(loginRequest.getNickname());
+        Optional<User> userOptional = userRepository.findByNickname(loginRequest.getNickname());
 
-        if (loginRequest.getNickname().length() <= 2 || loginRequest.getNickname().length() >= 8) {
+        if (loginRequest.getNickname().length() < 2 || loginRequest.getNickname().length() > 8) {
             LoginErrorDTO loginErrorDTO = createLoginErrorDTO("닉네임 글자수는 2자 이상 8자 이하이어야 합니다.");
 
             return new ResponseEntity<>(loginErrorDTO, HttpStatus.CONFLICT);
@@ -69,7 +70,7 @@ public class UserService {
             LoginErrorDTO loginErrorDTO = createLoginErrorDTO("비밀번호는 숫자와 영문자를 포함한 8자 이상이어야 합니다.");
             return new ResponseEntity<>(loginErrorDTO, HttpStatus.CONFLICT);
         }
-        if (user == null) {
+        if (!userOptional.isPresent()) {
             //위의조건 만족&DB에 해당 닉네임이 부존재시 등록후 자동로그인
             User newUser = saveNewUser(loginRequest);
             LoginResponseDTO loginResponseDTO = createLoginResponseDTO(newUser);
@@ -77,7 +78,7 @@ public class UserService {
             return new ResponseEntity<>(loginResponseDTO,HttpStatus.CREATED);
         }
 
-        if (user!=null && !user.getPassword().equals(loginRequest.getPassword())) {
+        if (userOptional.isPresent() && !userOptional.get().getPassword().equals(loginRequest.getPassword())) {
             LoginErrorDTO loginErrorDTO = createLoginErrorDTO("비밀번호가 일치하지 않습니다.");
             return new ResponseEntity<>(loginErrorDTO, HttpStatus.FORBIDDEN);
         }
@@ -85,7 +86,7 @@ public class UserService {
 
 
         // 해당 조건 모두 통과시 Statuscode 200 반환
-        LoginResponseDTO loginResponseDTO = createLoginResponseDTO(user);
+        LoginResponseDTO loginResponseDTO = createLoginResponseDTO(userOptional.get());
         return new ResponseEntity<>(loginResponseDTO, HttpStatus.OK);
     }
 

@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Christmass MADE BY DONGHUN</title>
+  <title>Christmas MADE BY DONGHUN</title>
   <style>
+    @keyframes snow {
+      0% { transform: translateY(-100vh); }
+      100% { transform: translateY(100vh); }
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
     body {
-      background-color: #000;
+      background-color: #001f3f; /* Deep Blue */
       color: #fff;
       font-family: 'Courier New', Courier, monospace;
       display: flex;
@@ -12,13 +20,26 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      overflow: hidden;
+      position: relative;
     }
+    .snow {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      bottom: 100%;
+      animation: snow 3s linear infinite;
+    }
+    .snow:nth-child(odd) { background: #99ccff; }
     .fireplace {
       position: relative;
-      width: 100px;
-      height: 100px;
-      border-radius: 0 0 50px 50px;
+      width: 120px; /* Wider fireplace */
+      height: 120px; /* Taller fireplace */
+      border-radius: 0 0 60px 60px;
       background-color: #b22222;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
     }
     .flame {
       position: absolute;
@@ -36,13 +57,16 @@
       transform: translateX(-50%);
       width: 50%;
       height: 100%;
-      background-color: #ffff00;
+      background-color: #ff9100; /* Warmer flame color */
       border-radius: 50%;
     }
-    @keyframes flicker {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
+    .tree {
+      position: absolute;
+      bottom: 0;
+      width: 20px;
+      height: 80px; /* Taller tree */
+      background-color: #008000;
+      transform: translateY(100%);
     }
   </style>
 </head>
@@ -50,5 +74,11 @@
 <div class="fireplace">
   <div class="flame"></div>
 </div>
+<div class="tree"></div>
+<div class="snow"></div>
+<div class="snow"></div>
+<div class="snow"></div>
+<div class="snow"></div>
+<div class="snow"></div>
 </body>
 </html>

@@ -31,34 +31,33 @@ public class VoteLogService {
     private final UserRepository userRepository;
 
 
-    public VoteLogResponseDto getVoteDetils(Long contentId, Long userId) {
+    public VoteLogResponseDto checkUserVoteStatus(Long contentId, Long userId) {
 
         Integer choice = voteLogQueryRepository.findChoiceByUserIdAndVoteContentId(contentId, userId);
 
         if(choice == -1){
-            return VoteLogResponseDto.of(false, null, null);
+            return VoteLogResponseDto.of(false, null, null, null);
         }
 
         List<VoteResultResponseDto> voteResultResponseDtoList = getVoteResult(contentId);
 
-        return VoteLogResponseDto.of(true, choice, voteResultResponseDtoList);
+        return VoteLogResponseDto.of(true, choice, getTotalVoteCnt(contentId), voteResultResponseDtoList);
+    }
+
+
+    public List<VoteResultResponseDto> getVoteDetils(Long contentId) {
+        return getVoteResult(contentId);
     }
 
     private List<VoteResultResponseDto> getVoteResult(Long contentId) {
+
         List<Vote> votes = getVoteList(contentId);
 
-        long totalVoteCnt = getTotalVoteCnt(votes);
+        long totalVoteCnt = getTotalVoteCnt(contentId);
 
         List<VoteResultResponseDto> voteResultResponseDtoList = getVoteResultResponseDtos(votes, totalVoteCnt);
 
         return voteResultResponseDtoList;
-    }
-
-    private static long getTotalVoteCnt(List<Vote> votes) {
-        long totalVoteCnt = votes.stream()
-                .mapToLong(Vote::getVoteCnt)
-                .sum();
-        return totalVoteCnt;
     }
 
     private List<Vote> getVoteList(Long contentId) {
@@ -66,12 +65,22 @@ public class VoteLogService {
         return votes;
     }
 
+    private long getTotalVoteCnt(Long contentId){
+        Content content = contentRepository.findById(contentId)
+                .orElseThrow(ContentNotFoundException::new);
+
+        return content.getTotalVoteCnt();
+    }
+
+
     private static List<VoteResultResponseDto> getVoteResultResponseDtos(List<Vote> votes, long totalVoteCnt) {
         List<VoteResultResponseDto> voteResultResponseDtoList = new ArrayList<>();
+
         for (Vote vote : votes) {
             int percent = getPercent(totalVoteCnt, vote);
             voteResultResponseDtoList.add(VoteResultResponseDto.of(vote.getChoice(), percent));
         }
+
         return voteResultResponseDtoList;
     }
 
@@ -82,30 +91,37 @@ public class VoteLogService {
 
 
     public VoteLogResponseDto submitVote(VoteRequestDto voteRequestDto) {
+        Integer choice = -1;
 
-        Integer choice = voteLogQueryRepository.findChoiceByUserIdAndVoteContentId(voteRequestDto.contentId(), voteRequestDto.userId());
+        if(voteRequestDto.userId() != null){
+            choice = voteLogQueryRepository.findChoiceByUserIdAndVoteContentId(voteRequestDto.contentId(), voteRequestDto.userId());
+        }
 
         if (choice != -1){
             throw new UserAlreadyVotedException();
         }
 
-        registerVote(voteRequestDto);
+        Long totalVoteCnt = registerVote(voteRequestDto);
 
         List<VoteResultResponseDto> voteResultResponseDtoList = getVoteResult(voteRequestDto.contentId());
 
-        return VoteLogResponseDto.of(true, voteRequestDto.choice(), voteResultResponseDtoList);
+        return VoteLogResponseDto.of(true, voteRequestDto.choice(), totalVoteCnt, voteResultResponseDtoList);
     }
 
-    private void registerVote(VoteRequestDto voteRequestDto) {
+    private Long registerVote(VoteRequestDto voteRequestDto) {
 
         Content content = updateCotentTotalVoteCnt(voteRequestDto);
 
         Vote vote = updateVoteVoteCnt(voteRequestDto, content);
 
-        User user = userRepository.findById(voteRequestDto.userId())
-                .orElseThrow(UserNotFoundException::new);
+        User user = null;
+        if(voteRequestDto.userId() != null){
+            user = userRepository.findById(voteRequestDto.userId())
+                    .orElseThrow(UserNotFoundException::new);
+        }
 
         voteLogRepository.save(voteRequestDto.toEntity(vote, user));
+        return content.getTotalVoteCnt();
     }
 
     private Vote updateVoteVoteCnt(VoteRequestDto voteRequestDto, Content content) {

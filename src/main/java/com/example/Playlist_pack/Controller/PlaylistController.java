@@ -1,6 +1,7 @@
 package com.example.Playlist_pack.Controller;
 
 import com.example.Playlist_pack.Domain.Playlist;
+import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
 import com.example.Playlist_pack.Dto.request.PlaylistRegisterRequestDto;
 import com.example.Playlist_pack.Dto.response.PlaylistBoxResponseDto;
 import com.example.Playlist_pack.Dto.response.PlaylistOneResponseDto;
@@ -8,8 +9,10 @@ import com.example.Playlist_pack.Dto.response.PlaylistResponseDto;
 import com.example.Playlist_pack.Global.dto.response.HttpResponse;
 import com.example.Playlist_pack.Service.PlaylistService;
 import com.example.Playlist_pack.Service.SpotifyService;
+import com.mysql.cj.util.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +24,16 @@ import java.util.Optional;
 @RequestMapping("/playlists")
 public class PlaylistController {
 
+    @Value("${custom.s3url}")
+    private String s3url;
+
     private final PlaylistService playlistService;
     private final SpotifyService spotifyService;
 
-    @PostMapping
+    @PostMapping("/{nickname}")
     @Operation(summary = "선물 등록", description = "사용자가 선물을 전송합니다.")
-    public HttpResponse createPlaylist(@RequestBody PlaylistRegisterRequestDto playlistRegisterRequestDto) {
-        playlistService.createPlaylist(playlistRegisterRequestDto);
+    public HttpResponse createPlaylist(@RequestBody PlaylistRegisterRequestDto playlistRegisterRequestDto, @PathVariable String nickname) {
+        playlistService.createPlaylist(playlistRegisterRequestDto, nickname);
         return HttpResponse.createdBuilder().build();
     }
 
@@ -36,28 +42,34 @@ public class PlaylistController {
     public HttpResponse<Optional<PlaylistOneResponseDto>> getPlaylistOne(@RequestParam Long userId, @RequestParam Long playlistId) {
         return HttpResponse.okBuild(
                 playlistService.searchPlayListOne(userId, playlistId)
-                        .map(PlaylistOneResponseDto::from));
+                        .map((Playlist playlist) -> PlaylistOneResponseDto.from(playlist, s3url)));
     }
 
 
+
     @GetMapping("/boxes")
-    @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
+    @Operation(summary = "선물 상자 포장 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
     public HttpResponse<List<PlaylistBoxResponseDto>> getPlayListPackBoxes(@RequestParam String nickname){
         return HttpResponse.okBuild(
-                playlistService.searchPlayListPack(nickname)
+                playlistService.searchPlayListPackByNickname(nickname)
                         .stream()
-                        .map(PlaylistBoxResponseDto::from)
+                        .map(playlist -> PlaylistBoxResponseDto.of(playlist,s3url))
                         .toList());
     }
 
 
     @GetMapping("/{userId}")
-    @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보만 조회합니다.")
+    @Operation(summary = "선물 상자 전체 조회", description = "사용자가 받은 선물 상자에 대한 정보와 상자 내용과 함께 조회합니다.")
     public HttpResponse<List<PlaylistResponseDto>> getPlayListPack(@PathVariable Long userId){
         return HttpResponse.okBuild(
-                playlistService.searchPlayListPack(userId)
+                playlistService.searchPlayListPackByUserId(userId)
                         .stream()
-                        .map((Playlist playlist) -> PlaylistResponseDto.of(playlist, spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()) ))
+                        .map((playlist) -> StringUtils.isNullOrEmpty(playlist.getSpotifyId()) ?
+                                        PlaylistResponseDto.of(playlist, s3url) :
+                                        PlaylistResponseDto.of(playlist,
+                                                (SpotifySearchResponseDto) spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url))
                         .toList());
     }
+
+
 }

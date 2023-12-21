@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 public record PlaylistBoxResponseDto(Long playlistId,
                                   String boxImageUrl,
                                   LocalDateTime createdDate ) {
-    public static PlaylistBoxResponseDto from(Playlist playlist){
+
+    public static PlaylistBoxResponseDto of(Playlist playlist, String s3url){
         return PlaylistBoxResponseDto.builder()
                 .playlistId(playlist.getPlaylistId())
-                .boxImageUrl(playlist.getCoverIdx()+"_"+playlist.getDecoIdx()+"_"+playlist.getColorIdx())
+                .boxImageUrl(s3url+"gift-box/"+playlist.getCoverIdx()+"_"+playlist.getDecoIdx()+"_"+playlist.getColorIdx()+".jpg")
                 .createdDate(playlist.getCreatedDate())
                 .build();
 

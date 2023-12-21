@@ -43,6 +43,25 @@ dependencies {
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+	//Cache
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'org.ehcache:ehcache:3.10.6'
+	// JSR-107
+	implementation 'javax.cache:cache-api:1.1.1'
+
+	// jaxb(binding xml to java beans)
+	implementation 'com.sun.xml.bind:jaxb-core:2.3.0.1'
+	implementation 'com.sun.xml.bind:jaxb-impl:2.3.1'
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation 'org.javassist:javassist:3.25.0-GA'
+
+	//Actuator
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// Spring AOP
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
 }
 
 tasks.named('bootBuildImage') {

@@ -3,9 +3,11 @@ package com.example.Playlist_pack.Dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Builder
 @Getter
-public class SpotifySearchResponseDto {
+public class SpotifySearchResponseDto implements Serializable,SpotifyDto {
     private String spotifyId;
     private String artistName;
     private String title;

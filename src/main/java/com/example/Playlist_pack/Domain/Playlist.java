@@ -6,7 +6,10 @@ import com.example.Playlist_pack.Domain.enums.CoverType;
 import com.example.Playlist_pack.Domain.enums.DecoType;
 import com.example.Playlist_pack.Global.domain.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
@@ -17,7 +20,7 @@ public class Playlist extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playlistId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String spotifyId;
 
     //포장지 idx
@@ -38,7 +41,7 @@ public class Playlist extends BaseEntity {
     @Column(nullable = false)
     private String friendname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 300)
     private String letter;
 
     @ManyToOne(fetch = FetchType.LAZY)

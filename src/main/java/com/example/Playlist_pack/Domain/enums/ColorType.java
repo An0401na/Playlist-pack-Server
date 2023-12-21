@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum ColorType {
-    colar,
+    coral,
     mint,
     white;
 

@@ -11,9 +11,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record PlaylistRegisterRequestDto (
 
-    @NotNull(message = "수신인 아이디는 필수 입력값입니다.")
-    @Schema(description = "수신인", nullable = false, example = "")
-    Long userId,
 
     @NotNull(message = "포장지 번호는 필수 입력값입니다.")
     @Schema(description = "포장지 번호", nullable = false, example = "")
@@ -35,8 +32,7 @@ public record PlaylistRegisterRequestDto (
     @Schema(description = "발송인", nullable = false, example = "")
     String friendname,
 
-    @NotNull(message = "스포티파이 노래 아이디는 필수 입력값입니다.")
-    @Schema(description = "스포티파이 노래 아이디", nullable = false, example = "")
+    @Schema(description = "스포티파이 노래 아이디", nullable = true, example = "")
     String spotifyId  ) {
 
     public Playlist toEntity(User user){

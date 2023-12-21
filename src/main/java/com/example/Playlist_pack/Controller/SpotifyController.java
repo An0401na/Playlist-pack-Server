@@ -1,7 +1,7 @@
 package com.example.Playlist_pack.Controller;
 
+import com.example.Playlist_pack.Dto.SpotifyDto;
 import com.example.Playlist_pack.Dto.SpotifySearchResponseDto;
-import com.example.Playlist_pack.Global.dto.response.HttpResponse;
 import com.example.Playlist_pack.Service.SpotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,8 +21,8 @@ public class SpotifyController {
     SpotifyService spotifyService =new SpotifyService();
 
     @GetMapping("/search/{trackname}")
-    public HttpResponse<List<SpotifySearchResponseDto>> searchTracksByTrackname(@PathVariable String trackname) throws IOException, ParseException, SpotifyWebApiException {
-        return HttpResponse.okBuild(spotifyService.SearchByTrackname(trackname));
+    public List<SpotifySearchResponseDto> searchTracksByTrackname(@PathVariable String trackname) throws IOException, ParseException, SpotifyWebApiException {
+        return spotifyService.SearchByTrackname(trackname);
     }
 
 
@@ -34,8 +34,8 @@ public class SpotifyController {
     }
 
     @GetMapping("/search/spotifyId/{spotifyId}")
-    public HttpResponse<SpotifySearchResponseDto> searchTracksBySpotifyId(@PathVariable String spotifyId) throws IOException, ParseException, SpotifyWebApiException {
-        return HttpResponse.okBuild(spotifyService.getTrackBySpotifyId(spotifyId));
+    public SpotifyDto searchTracksBySpotifyId(@PathVariable String spotifyId) throws IOException, ParseException, SpotifyWebApiException {
+        return spotifyService.getTrackBySpotifyId(spotifyId);
     }
 
     @GetMapping("/search/genre/{genre}")
