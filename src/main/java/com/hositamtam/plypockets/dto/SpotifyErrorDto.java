@@ -7,7 +7,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class SpotifyErrorDto implements SpotifyDto {
+public class SpotifyErrorDto {
     String message;
 }
 

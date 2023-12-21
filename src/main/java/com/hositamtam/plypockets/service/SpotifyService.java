@@ -1,7 +1,6 @@
 package com.hositamtam.plypockets.service;
 
 import com.hositamtam.plypockets.config.SpotifyConfig;
-import com.hositamtam.plypockets.dto.SpotifyDto;
 import com.hositamtam.plypockets.dto.SpotifyDtoMapper;
 import com.hositamtam.plypockets.dto.SpotifySearchResponseDto;
 import com.hositamtam.plypockets.global.exception.custom.spotify.SpotifyErrorException;
@@ -222,7 +221,7 @@ public class SpotifyService {
         return searchResponseDtoList;
     }
 
-    public SpotifyDto getTrackBySpotifyId(String spotifyId)  {
+    public SpotifySearchResponseDto getTrackBySpotifyId(String spotifyId)  {
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setAccessToken(SpotifyConfig.getAccessToken())
                 .build();
