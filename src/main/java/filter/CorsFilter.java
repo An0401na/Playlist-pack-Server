@@ -1,17 +1,13 @@
 package filter;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -26,17 +22,26 @@ public class CorsFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods","*");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers",
-                "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        // 클라이언트의 Origin을 가져옵니다.
+        String origin = request.getHeader("Origin");
+        System.out.println("오리진 : "+origin);
 
-        if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
-        }else {
-            chain.doFilter(req, res);
+        // 허용하는 도메인인 경우에만 CORS 헤더를 설정합니다.
+        if ("https://www.plypockets.com".equals(origin)) {
+            response.setHeader("Access-Control-Allow-Origin", origin);
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Methods", "*");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+            if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                chain.doFilter(req, res);
+            }
+        } else {
+            // 다른 도메인의 경우 CORS 에러를 발생시킵니다.
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }
 
