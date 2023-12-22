@@ -14,13 +14,13 @@ import java.lang.reflect.Method;
 @Component //스프링 빈으로 등록
 public class LogAspect {
 
-    @Pointcut("execution(* com.example.Playlist_pack..*(..))")
+    @Pointcut("execution(* com.hositamtam.plypockets..*(..))")
     public void all() {
     }
-    @Pointcut("execution(* com.example.Playlist_pack..*Controller.*(..))")
+    @Pointcut("execution(* com.hositamtam.plypockets..*Controller.*(..))")
     public void controller() {
     }
-    @Pointcut("execution(* com.example.Playlist_pack..*Service.*(..))")
+    @Pointcut("execution(* com.hositamtam.plypockets..*Service.*(..))")
     public void service(){}
     @Around("all()")
     public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
