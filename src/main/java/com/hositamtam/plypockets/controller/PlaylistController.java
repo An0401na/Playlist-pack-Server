@@ -1,7 +1,6 @@
 package com.hositamtam.plypockets.controller;
 
 import com.hositamtam.plypockets.domain.Playlist;
-import com.hositamtam.plypockets.dto.SpotifySearchResponseDto;
 import com.hositamtam.plypockets.dto.request.PlaylistRegisterRequestDto;
 import com.hositamtam.plypockets.dto.response.PlaylistBoxResponseDto;
 import com.hositamtam.plypockets.dto.response.PlaylistOneResponseDto;
@@ -67,7 +66,7 @@ public class PlaylistController {
                         .map((playlist) -> StringUtils.isNullOrEmpty(playlist.getSpotifyId()) ?
                                         PlaylistResponseDto.of(playlist, s3url) :
                                         PlaylistResponseDto.of(playlist,
-                                                (SpotifySearchResponseDto) spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url))
+                                                 spotifyService.getTrackBySpotifyId(playlist.getSpotifyId()), s3url))
                         .toList());
     }
 
