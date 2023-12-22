@@ -1,6 +1,5 @@
 package com.hositamtam.plypockets.controller;
 
-import com.hositamtam.plypockets.dto.SpotifyDto;
 import com.hositamtam.plypockets.dto.SpotifySearchResponseDto;
 import com.hositamtam.plypockets.service.SpotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class SpotifyController {
     }
 
     @GetMapping("/search/spotifyId/{spotifyId}")
-    public SpotifyDto searchTracksBySpotifyId(@PathVariable String spotifyId) throws IOException, ParseException, SpotifyWebApiException {
+    public SpotifySearchResponseDto searchTracksBySpotifyId(@PathVariable String spotifyId) throws IOException, ParseException, SpotifyWebApiException {
         return spotifyService.getTrackBySpotifyId(spotifyId);
     }
 
