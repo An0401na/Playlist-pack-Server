@@ -17,9 +17,8 @@ public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    public LocalDateTime createdDate = LocalDateTime.now();
+    public LocalDateTime createdDate = LocalDateTime.now().plusHours(9);
 
     @LastModifiedDate
-    public LocalDateTime updatedDate = LocalDateTime.now();
+    public LocalDateTime updatedDate = LocalDateTime.now().plusHours(9);
 }
-
