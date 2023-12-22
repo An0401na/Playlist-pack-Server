@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    driver-class-name: ${DB_DRIVER}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+  sql:
+    init:
+      mode: always
+  # error 404
+  mvc:
+    throw-exception-if-no-handler-found: true
+    dispatch-options-request: false
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+spotify:
+  registration:
+    client-id: ${SPOTIFY_CLIENT_ID}
+    client-secret: ${SPOTIFY_CLIENT_SECRET}
+    redirect-uri: ${SPOTIFY_REDIRECT_URI}
+    scope: user-read-private,user-read-email
+  provider:
+    authorization-uri: https://accounts.spotify.com/authorize
+    token-uri: https://accounts.spotify.com/api/token
+    user-info-uri: https://api.spotify.com/v1/me
+
+custom:
+  s3url : ${s3url}

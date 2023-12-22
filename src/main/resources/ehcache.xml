@@ -18,7 +18,7 @@
         <listeners>
             <listener>
                 <!-- 리스너 클래스 위치 -->
-                <class>com.example.Playlist_pack.Config.cache.CacheEventLogger</class>
+                <class>com.hositamtam.plypockets.config.cache.CacheEventLogger</class>
 
                 <!-- 비동기 방식 사용, 캐시 동작을 블로킹하지 않고 이벤트를 처리, SYNCHRONOUS와 반대 -->
                 <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
@@ -54,7 +54,7 @@
         <listeners>
             <listener>
                 <!-- 리스너 클래스 위치 -->
-                <class>com.example.Playlist_pack.Config.cache.CacheEventLogger</class>
+                <class>com.hositamtam.plypockets.config.cache.CacheEventLogger</class>
 
                 <!-- 비동기 방식 사용, 캐시 동작을 블로킹하지 않고 이벤트를 처리, SYNCHRONOUS와 반대 -->
                 <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
