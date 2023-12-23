@@ -18,10 +18,14 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
+
+    private final PlaylistService playlistService;
     private final UserRepository userRepository;
 
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(PlaylistService playlistService, UserRepository userRepository) {
+        this.playlistService = playlistService;
         this.userRepository = userRepository;
     }
 
@@ -75,6 +79,8 @@ public class UserService {
         if (!userOptional.isPresent()) {
             //위의조건 만족&DB에 해당 닉네임이 부존재시 등록후 자동로그인
             User newUser = saveNewUser(loginRequest);
+            // 첫 선물 등록
+            playlistService.createFirstPlaylist(newUser);
             LoginResponseDTO loginResponseDTO = createLoginResponseDTO(newUser);
 
             return new ResponseEntity<>(loginResponseDTO,HttpStatus.CREATED);
