@@ -33,12 +33,18 @@ public class PlaylistService {
 
     public void createFirstPlaylist(User user) {
         playlistRepository.save(Playlist.builder()
-                .coverIdx(CoverType.red)
+                .coverIdx(CoverType.green)
                 .decoIdx(DecoType.ribbon)
-                .colorIdx(ColorType.white)
-                .letter("만나서 반가워요! 플리보따리를 이용해 주셔서 감사합니다💝 따뜻한 연말 되세요🎁")
+                .colorIdx(ColorType.coral)
+                .letter("안녕하세요! 플리 보따리에 오신 여러분을 환영합니다.🎅\n" +
+                        "\n" +
+                        "플리 보따리는 연말을 맞아 친구나 지인에게 캐롤과 함께 비밀편지를 전달해주는 서비스입니다.\n" +
+                        "\n" +
+                        "이번 크리스마스에는 친구나 지인에게 노래와 함께 말하지 못했던 소중한 마음을 플리 보따리에 담아 전달해보세요.\n" +
+                        "\n" +
+                        "올 한해 마무리를 🎁플리 보따리🎁와 함께해보세요!")
                 .friendname("플리보따리🎁")
-                .spotifyId("0bYg9bo50gSsH3LtXe2SQn")
+                .spotifyId("3jImLeLoNu74fDyftw2Wuc")
                 .user(user)
                 .build()
         );
