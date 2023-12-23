@@ -44,7 +44,7 @@ public class PlaylistService {
                         "\n" +
                         "올 한해 마무리를 🎁플리 보따리🎁와 함께해보세요!")
                 .friendname("플리보따리🎁")
-                .spotifyId("3jImLeLoNu74fDyftw2Wuc")
+                .spotifyId("")
                 .user(user)
                 .build()
         );
