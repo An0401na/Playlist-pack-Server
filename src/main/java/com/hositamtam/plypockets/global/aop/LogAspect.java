@@ -33,7 +33,7 @@ public class LogAspect {
         } finally {
             long finish = System.currentTimeMillis();
             long timeMs = finish - start;
-            log.info("[TIME] {}.{} : {}Ms,",
+            log.info("[   TIME   ] {}.{} : {}Ms,",
                     joinPoint.getTarget().getClass().getSimpleName(),
                     method.getName(),
                     timeMs);
@@ -44,7 +44,7 @@ public class LogAspect {
     public void beforeLogic(JoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        log.info("[START METHOD] : {}.{}", joinPoint.getTarget().getClass().getSimpleName(),method.getName());
+        log.info("[   START   ] : {}.{}", joinPoint.getTarget().getClass().getSimpleName(),method.getName());
 
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
@@ -60,7 +60,7 @@ public class LogAspect {
     public void afterLogic(JoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        log.info("[END METHOD] : {}.{}", joinPoint.getTarget().getClass().getSimpleName(),method.getName());
+        log.info("[   END   ] : {}.{}", joinPoint.getTarget().getClass().getSimpleName(),method.getName());
 
 
     }
