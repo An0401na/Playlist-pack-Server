@@ -3,6 +3,9 @@ package com.hositamtam.plypockets.service;
 
 import com.hositamtam.plypockets.domain.Playlist;
 import com.hositamtam.plypockets.domain.User;
+import com.hositamtam.plypockets.domain.enums.ColorType;
+import com.hositamtam.plypockets.domain.enums.CoverType;
+import com.hositamtam.plypockets.domain.enums.DecoType;
 import com.hositamtam.plypockets.dto.request.PlaylistRegisterRequestDto;
 import com.hositamtam.plypockets.global.exception.custom.user.UserNotFoundException;
 import com.hositamtam.plypockets.repository.PlaylistRepository;
@@ -28,9 +31,22 @@ public class PlaylistService {
         playlistRepository.save(playlistRegisterRequestDto.toEntity(user));
     }
 
+    public void createFirstPlaylist(User user) {
+        playlistRepository.save(Playlist.builder()
+                .coverIdx(CoverType.red)
+                .decoIdx(DecoType.ribbon)
+                .colorIdx(ColorType.white)
+                .letter("만나서 반가워요! 플리보따리를 이용해 주셔서 감사합니다💝 따뜻한 연말 되세요🎁")
+                .friendname("플리보따리🎁")
+                .spotifyId("0bYg9bo50gSsH3LtXe2SQn")
+                .user(user)
+                .build()
+        );
+    }
+
     public List<Playlist> searchPlayListPackByNickname(String nickname) {
         User user = userRepository.findByNickname(nickname)
-                        .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(UserNotFoundException::new);
         return playlistRepository.findAllByUser(user);
     }
 
