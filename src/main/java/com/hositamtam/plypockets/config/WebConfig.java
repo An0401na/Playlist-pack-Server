@@ -17,7 +17,7 @@ public class WebConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // 원하는 도메인만 허용하도록 설정
-        config.addAllowedOrigin("*");
+        config.addAllowedOrigin("https://www.plypockets.com");
 
         // 허용할 헤더를 모두 허용하도록 설정
         config.addAllowedHeader("*");
