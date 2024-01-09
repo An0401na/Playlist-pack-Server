@@ -10,6 +10,7 @@ import com.hositamtam.plypockets.service.PlaylistService;
 import com.hositamtam.plypockets.service.SpotifyService;
 import com.mysql.cj.util.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class PlaylistController {
 
     @PostMapping("/{nickname}")
     @Operation(summary = "선물 등록", description = "사용자가 선물을 전송합니다.")
-    public HttpResponse createPlaylist(@RequestBody PlaylistRegisterRequestDto playlistRegisterRequestDto, @PathVariable String nickname) {
+    public HttpResponse createPlaylist(@Valid @RequestBody PlaylistRegisterRequestDto playlistRegisterRequestDto, @PathVariable String nickname) {
         playlistService.createPlaylist(playlistRegisterRequestDto, nickname);
         return HttpResponse.createdBuilder().build();
     }
