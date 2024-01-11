@@ -47,6 +47,6 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining());
 
         return ResponseEntity.badRequest()
-                .body(ErrorResponseDto.from(HttpExceptionCode.INVALID_ARGUMENT.getHttpStatus(), errorMessage.toString()));
+                .body(ErrorResponseDto.from(HttpExceptionCode.INVALID_ARGUMENT.getHttpStatus(), errorMessage));
     }
 }
