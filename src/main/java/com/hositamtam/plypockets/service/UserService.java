@@ -29,40 +29,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User registerUser(UserDto userDto) {
-        User newUser = User.builder()
-                .email(userDto.getEmail())
-                .password(userDto.getPassword())
-                .nickname(userDto.getNickname())
-                .build();
 
-        return userRepository.save(newUser);
-    }
-
-
-    public String getPasswordByEmail(String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-
-        return userOptional.map(User::getPassword).orElse(null);
-    }
-
-    @Getter
-    public static class Response {
-        private Long userId;
-        private String status;
-        private String error;
-
-        public Response(Long userId, String status) {
-            this.userId = userId;
-            this.status = status;
-        }
-
-        public Response(Long userId, String status, String error) {
-            this.userId = userId;
-            this.status = status;
-            this.error = error;
-        }
-    }
     public ResponseEntity<?> loginUser(LoginDto loginRequest) {
         Optional<User> userOptional = userRepository.findByNickname(loginRequest.getNickname());
 

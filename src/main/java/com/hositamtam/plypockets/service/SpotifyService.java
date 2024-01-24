@@ -26,7 +26,6 @@ import java.util.List;
 @Service
 @Transactional
 @Slf4j
-
 public class SpotifyService {
 
     @Autowired
