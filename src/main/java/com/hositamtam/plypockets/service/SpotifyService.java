@@ -28,11 +28,17 @@ import java.util.List;
 @Slf4j
 public class SpotifyService {
 
+    private final SpotifyConfig spotifyConfig;
+    private final SpotifyApi spotifyApi;
+
     @Autowired
-    private SpotifyConfig spotifyConfig;
-    private SpotifyApi spotifyApi = new SpotifyApi.Builder()
-            .setAccessToken(spotifyConfig.getAccessToken())
-            .build();
+    public SpotifyService(SpotifyConfig spotifyConfig) {
+        this.spotifyConfig = spotifyConfig;
+        this.spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(spotifyConfig.getAccessToken())
+                .build();
+    }
+
 
     public List<SpotifySearchResponseDto> SearchByTrackname(String trackname) {
 
