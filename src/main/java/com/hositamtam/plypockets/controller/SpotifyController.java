@@ -2,6 +2,7 @@ package com.hositamtam.plypockets.controller;
 
 import com.hositamtam.plypockets.dto.SpotifySearchResponseDto;
 import com.hositamtam.plypockets.service.SpotifyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,9 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
+@RequiredArgsConstructor
 public class SpotifyController {
-    @Autowired
-    SpotifyService spotifyService =new SpotifyService();
+    private final SpotifyService spotifyService;
 
     @GetMapping("/search/{trackname}")
     public List<SpotifySearchResponseDto> searchTracksByTrackname(@PathVariable String trackname) throws IOException, ParseException, SpotifyWebApiException {
