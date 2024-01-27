@@ -4,8 +4,10 @@ import com.hositamtam.plypockets.config.SpotifyConfig;
 import com.hositamtam.plypockets.dto.SpotifyDtoMapper;
 import com.hositamtam.plypockets.dto.SpotifySearchResponseDto;
 import com.hositamtam.plypockets.global.exception.custom.spotify.SpotifyErrorException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +27,21 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class SpotifyService {
-    public List<SpotifySearchResponseDto> SearchByTrackname(String trackname) {
-        SpotifyApi spotifyApi = new SpotifyApi.Builder()
-                .setAccessToken(SpotifyConfig.getAccessToken())
+
+    private final SpotifyConfig spotifyConfig;
+    private final SpotifyApi spotifyApi;
+
+    @Autowired
+    public SpotifyService(SpotifyConfig spotifyConfig) {
+        this.spotifyConfig = spotifyConfig;
+        this.spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(spotifyConfig.getAccessToken())
                 .build();
+    }
+
+
+    public List<SpotifySearchResponseDto> SearchByTrackname(String trackname) {
+
 
         List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
@@ -68,9 +81,6 @@ public class SpotifyService {
 
 
     public List<SpotifySearchResponseDto> SearchByTracknameAndArtist(String trackname, String Artist) {
-        SpotifyApi spotifyApi = new SpotifyApi.Builder()
-                .setAccessToken(SpotifyConfig.getAccessToken())
-                .build();
 
         List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
@@ -106,9 +116,6 @@ public class SpotifyService {
     }
 
     public List<SpotifySearchResponseDto> searchByGenre(String genre) {
-        SpotifyApi spotifyApi = new SpotifyApi.Builder()
-                .setAccessToken(SpotifyConfig.getAccessToken())
-                .build();
 
         List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
@@ -145,9 +152,6 @@ public class SpotifyService {
 
     @Cacheable(cacheNames = "hot100Cache", key = "'hot100'")
     public List<SpotifySearchResponseDto> getHot100Chart() {
-        SpotifyApi spotifyApi = new SpotifyApi.Builder()
-                .setAccessToken(SpotifyConfig.getAccessToken())
-                .build();
 
         List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
@@ -185,9 +189,7 @@ public class SpotifyService {
 
     @Cacheable(cacheNames = "koreaHot100Cache", key = "'koreaHot100'")
     public List<SpotifySearchResponseDto> getKoreanHot100Chart() {
-        SpotifyApi spotifyApi = new SpotifyApi.Builder()
-                .setAccessToken(SpotifyConfig.getAccessToken())
-                .build();
+
 
         List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
@@ -224,9 +226,6 @@ public class SpotifyService {
     }
 
     public SpotifySearchResponseDto getTrackBySpotifyId(String spotifyId)  {
-        SpotifyApi spotifyApi = new SpotifyApi.Builder()
-                .setAccessToken(SpotifyConfig.getAccessToken())
-                .build();
 
         try {
             GetTrackRequest getTrackRequest = spotifyApi.getTrack(spotifyId).build();
