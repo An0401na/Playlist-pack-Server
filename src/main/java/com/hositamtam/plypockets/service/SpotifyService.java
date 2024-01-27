@@ -30,7 +30,7 @@ import java.util.List;
 public class SpotifyService {
 
     private final SpotifyConfig spotifyConfig;
-    private final SpotifyApi spotifyApi;
+    private  SpotifyApi spotifyApi;
 
     @Autowired
     public SpotifyService(SpotifyConfig spotifyConfig) {
@@ -40,6 +40,7 @@ public class SpotifyService {
     private void checkAndRefreshToken() {
         if (spotifyApi.getAccessToken() == null || isTokenExpired()) {
             spotifyConfig.refreshAccessToken();
+            this.spotifyApi=spotifyConfig.getSpotifyApi();
         }
     }
 

@@ -28,6 +28,11 @@ public class SpotifyConfig {
 
     private static String accessToken;
     private static Instant accessTokenExpiration;
+
+    public static Instant getAccessTokenExpiration() {
+        return accessTokenExpiration;
+    }
+
     @PostConstruct
     public void initialize() {
 
@@ -35,15 +40,6 @@ public class SpotifyConfig {
         refreshAccessToken();
     }
 
-    public String getAccessToken() {
-        if (accessToken == null || Instant.now().isAfter(accessTokenExpiration)) {
-            refreshAccessToken();
-        }
-        return accessToken;
-    }
-    public Instant getAccessTokenExpiration() {
-        return accessTokenExpiration;
-    }
 
     public static SpotifyApi getSpotifyApi() {
         if (spotifyApi == null || Instant.now().isAfter(accessTokenExpiration)) {
