@@ -24,7 +24,7 @@ public class SpotifyConfig {
     @Value("${spotify.registration.client-secret}")
     private String CLIENT_SECRET;
 
-    private SpotifyApi spotifyApi;
+    private static SpotifyApi spotifyApi;
 
     private static String accessToken;
     private static Instant accessTokenExpiration;
@@ -41,8 +41,18 @@ public class SpotifyConfig {
         }
         return accessToken;
     }
+    public Instant getAccessTokenExpiration() {
+        return accessTokenExpiration;
+    }
 
-    private void refreshAccessToken() {
+    public static SpotifyApi getSpotifyApi() {
+        if (spotifyApi == null || Instant.now().isAfter(accessTokenExpiration)) {
+            refreshAccessToken();
+        }
+        return spotifyApi;
+    }
+
+    public static void refreshAccessToken() {
         ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
         try {
             final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
