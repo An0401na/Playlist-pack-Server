@@ -4,6 +4,7 @@ import com.hositamtam.plypockets.global.dto.response.ErrorResponseDto;
 import com.hositamtam.plypockets.global.dto.response.HttpResponse;
 import com.hositamtam.plypockets.global.exception.HttpExceptionCode;
 import com.hositamtam.plypockets.global.exception.custom.BusinessException;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -40,17 +41,12 @@ public class GlobalExceptionHandler {
 
         BindingResult bindingResult = e.getBindingResult();
 
-        StringBuilder builder = new StringBuilder();
-        for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            builder.append("[");
-            builder.append(fieldError.getField());
-            builder.append("](은)는 ");
-            builder.append(fieldError.getDefaultMessage());
-            builder.append(" -> 입력된 값: ");
-            builder.append(fieldError.getRejectedValue());
-            builder.append(" & ");
-        }
+        String errorMessage = bindingResult.getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining());
+
         return ResponseEntity.badRequest()
-                .body(ErrorResponseDto.from(HttpExceptionCode.INVALID_ARGUMENT.getHttpStatus(), builder.toString()));
+                .body(ErrorResponseDto.from(HttpExceptionCode.INVALID_ARGUMENT.getHttpStatus(), errorMessage));
     }
 }
