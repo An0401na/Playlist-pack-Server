@@ -24,10 +24,15 @@ public class SpotifyConfig {
     @Value("${spotify.registration.client-secret}")
     private String CLIENT_SECRET;
 
-    private SpotifyApi spotifyApi;
+    private static SpotifyApi spotifyApi;
 
     private static String accessToken;
     private static Instant accessTokenExpiration;
+
+    public static Instant getAccessTokenExpiration() {
+        return accessTokenExpiration;
+    }
+
     @PostConstruct
     public void initialize() {
 
@@ -35,14 +40,15 @@ public class SpotifyConfig {
         refreshAccessToken();
     }
 
-    public String getAccessToken() {
-        if (accessToken == null || Instant.now().isAfter(accessTokenExpiration)) {
+
+    public static SpotifyApi getSpotifyApi() {
+        if (spotifyApi == null || Instant.now().isAfter(accessTokenExpiration)) {
             refreshAccessToken();
         }
-        return accessToken;
+        return spotifyApi;
     }
 
-    private void refreshAccessToken() {
+    public static void refreshAccessToken() {
         ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
         try {
             final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
